@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-container">
     <div class="login-form">
-        <form method="POST" action="{{route('empleado.password.email')}}">
+        <form method="POST" action="{{route('empleado.password.email.send')}}">
             @csrf
             <div class="card-header center-paragraph-bold">Restablecer contraseña</div>
             <div class="form-group">

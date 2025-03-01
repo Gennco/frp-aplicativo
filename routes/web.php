@@ -26,7 +26,7 @@ Route::post('empleado/login', [EmpleadoAuthController::class, 'login']);
 Route::post('empleado/logout', [EmpleadoAuthController::class, 'logout'])->name('empleado.logout');
 
 Route::get('empleado/password/email', [EmpleadoAuthController::class, 'showLinkEmailForm'])->name('empleado.password.email');
-Route::post('empleado/password/email', [EmpleadoAuthController::class, 'sendResetLinkEmail'])->name('empleado.password.email');
+Route::post('empleado/password/email', [EmpleadoAuthController::class, 'sendResetLinkEmail'])->name('empleado.password.email.send');
 Route::post('empleado/password/reset', [EmpleadoAuthController::class, 'updateResetForm'])->name('password.update');
 Route::get('empleado/password/reset/{token}', [EmpleadoAuthController::class, 'showResetForm'])->name('password.reset');
 
