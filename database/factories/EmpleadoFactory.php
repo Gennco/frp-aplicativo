@@ -17,7 +17,7 @@ class EmpleadoFactory extends Factory
             'lugartrabajo' => $this->faker->company,
             'nombre' => $this->faker->name,
             'cargo' => $this->faker->jobTitle,
-            'cedula' => $this->faker->unique()->numerify('##########'),
+            'cedula' => $this->faker->randomNumber(5, true),
             'contrasena' => Hash::make('password123'), // Contraseña hasheada
             'correo' => $this->faker->unique()->safeEmail,
             'delaciudad' => $this->faker->city,
