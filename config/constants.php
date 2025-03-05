@@ -14,6 +14,8 @@ return [
     'USUARIO_CONSTESTO' =>'contesto_OK',
     'SECCION_CONFIRMA_ATENCION'=>'confirma-atencion',
     'SECCION_CONFIRMA_JEFE'=>'confirma-jefe',
+    'SECCION_SOY_JEFE'=>'soy-jefe',
+    'SECCION_ATENCION-CLIENTE'=>'atencion-cliente',
     'SECCION_CONDICIONES_VIVIENDA'=>'condiciones-vivienda',
     'SECCION_CONDICIONES_EXTRA'=>'condiciones-extralaborales',
     'SECCION_ESTRES' => 'sintomas-estres',

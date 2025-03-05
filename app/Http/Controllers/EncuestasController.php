@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
 use App\Http\Requests\PreguntasRequest;
-
+use App\Http\Controllers\InformesController;
 use Illuminate\Support\Facades\Config;
 
 
@@ -177,7 +177,6 @@ class EncuestasController extends Controller
             $opciones = $this->obtenerOpcionesPreguntas($seccion->route);
             
             $preguntas = $this->obtenerValorPreguntas($seccion); 
-            
             return view('encuesta.preguntas', compact('preguntas','seccion','fichaDato', 'proximaSeccionId', 'prefijoPreguntas', 'sufijoPreguntas', 'opciones','total','avance'));
         }
         return view('encuesta.sinpreguntas', compact('seccion','fichaDato', 'proximaSeccionId'));
@@ -251,6 +250,8 @@ class EncuestasController extends Controller
 
                 }
             }
+
+            $this->generarInforme($seccion->route, $proximaSeccionId, $request->tipo, $fichaDato);
 
             return redirect()->route('encuesta.preguntas', ['tipo' =>strtolower($request->tipo),'seccion'=>$proximaSeccionId])
                             ->with('success', 'Respuestas guardadas correctamente.');
@@ -499,6 +500,32 @@ class EncuestasController extends Controller
         })->values();
 
         return $secciones;
+    }
+
+    public function generarInforme($ruta, $proximaSeccionId, $tipo, $fichaDato){
+        switch ($ruta) {
+            case config('constants.SECCION_CONFIRMA_ATENCION'):
+                if(($tipo == config('constants.TIPO_B') ) && $proximaSeccionId == config('constants.SECCION_CONDICIONES_VIVIENDA')){
+                   return false;
+                }
+                break;
+
+            case  config('constants.SECCION_CONFIRMA_ATENCION'): 
+                return false;
+                break;
+            case config('constants.SECCION_CONFIRMA_JEFE'):
+                if($proximaSeccionId == config('constants.SECCION_CONDICIONES_VIVIENDA')){
+                    InformesController::generarInformeIntraA($fichaDato);
+                }
+                break;
+            case config('constants.SECCION_SOY_JEFE'):
+                InformesController::generarInformeIntraA($fichaDato); 
+                break;
+             
+            default:
+                return false;
+            
+        }
     }
 
 }
