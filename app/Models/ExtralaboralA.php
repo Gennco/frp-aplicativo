@@ -43,10 +43,6 @@ class ExtralaboralA extends Model
 
     public function getTable()
     {
-<<<<<<< HEAD
-        // Determine the table name based on the user's role
-=======
->>>>>>> 2cb751a (comit inicial)
         if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
             return 'ext1a';
         }

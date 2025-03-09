@@ -11,22 +11,10 @@ use App\Models\Municipio;
 use App\Models\Seccion;
 use App\Models\Opcion;
 use Carbon\Carbon;
-<<<<<<< HEAD
-=======
-use Illuminate\Support\Facades\Log;
->>>>>>> 2cb751a (comit inicial)
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
 use App\Http\Requests\PreguntasRequest;
-<<<<<<< HEAD
-
-=======
-use App\Http\Controllers\InformesIntralaboralesController;
-use App\Http\Controllers\InformesExtralaboralesController;
-use App\Http\Controllers\InformesEstresController;
-use App\Http\Controllers\InformesAfrontamientoController;
->>>>>>> 2cb751a (comit inicial)
 use Illuminate\Support\Facades\Config;
 
 
@@ -188,10 +176,7 @@ class EncuestasController extends Controller
             $opciones = $this->obtenerOpcionesPreguntas($seccion->route);
             
             $preguntas = $this->obtenerValorPreguntas($seccion); 
-<<<<<<< HEAD
             
-=======
->>>>>>> 2cb751a (comit inicial)
             return view('encuesta.preguntas', compact('preguntas','seccion','fichaDato', 'proximaSeccionId', 'prefijoPreguntas', 'sufijoPreguntas', 'opciones','total','avance'));
         }
         return view('encuesta.sinpreguntas', compact('seccion','fichaDato', 'proximaSeccionId'));
@@ -220,11 +205,7 @@ class EncuestasController extends Controller
                 
   
                 $modelClass = $seccion->modelo;
-<<<<<<< HEAD
                
-=======
-            
->>>>>>> 2cb751a (comit inicial)
                 if (!class_exists($modelClass) ) {
                     return redirect()->back()
                                     ->with('error', 'Modelo no válido.');
@@ -270,11 +251,6 @@ class EncuestasController extends Controller
                 }
             }
 
-<<<<<<< HEAD
-=======
-            $this->generarInforme($seccion->route, $proximaSeccionId, $request->tipo, $fichaDato);
-
->>>>>>> 2cb751a (comit inicial)
             return redirect()->route('encuesta.preguntas', ['tipo' =>strtolower($request->tipo),'seccion'=>$proximaSeccionId])
                             ->with('success', 'Respuestas guardadas correctamente.');
         } catch (Exception $exception) {
@@ -524,8 +500,6 @@ class EncuestasController extends Controller
         return $secciones;
     }
 
-<<<<<<< HEAD
-=======
     public function generarInforme($ruta, $proximaSeccionId, $tipo, $fichaDato){
         switch ($ruta) {
             case config('constants.SECCION_CONFIRMA_ATENCION'):
@@ -566,6 +540,5 @@ class EncuestasController extends Controller
         }
     }
 
->>>>>>> 2cb751a (comit inicial)
 }
     
