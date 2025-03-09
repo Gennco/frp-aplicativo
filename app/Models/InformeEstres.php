@@ -1,15 +1,14 @@
-<?php
-
+<?php 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExtralaboralA extends Model
+class InformeEstres extends Model
 {
     use HasFactory;
 
-    protected $table = 'ext1';
+    protected $table = 'grupalestres1';
 
     protected $primaryKey = 'registro';
 
@@ -22,33 +21,27 @@ class ExtralaboralA extends Model
     protected $fillable = [
         'NumeroFolio',
         'registro',
-        'empresa',
-        'cedula',
-        'ext1',
-        'ext2',
-        'ext3',
-        'ext4',
-        'ext5',
-        'ext6',
-        'ext7',
-        'ext8',
-        'ext9',
-        'ext10',
-        'ext11',
-        'ext12',
-        'ext13',
+        'estres_cedula', 
+        'estres_lugartrabajo', 
+        'estres_depto',
+        'estres_ciudad', 
+        'estres_transformado1', 
+        'estres_transformado2', 
+        'estres_transformado3', 
+        'estres_transformado4', 
+        'estres_transformado5', 
+        'estres_rta1', 
+        'estres_rta2', 
+        'estres_rta3', 
+        'estres_rta4', 
+        'estres_rta5',
         'periodo'
-    ];  
-
+    ];
 
     public function getTable()
     {
-<<<<<<< HEAD
-        // Determine the table name based on the user's role
-=======
->>>>>>> 2cb751a (comit inicial)
         if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
-            return 'ext1a';
+            return 'grupalestres1a';
         }
 
         return $this->table;

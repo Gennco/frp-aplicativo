@@ -14,6 +14,11 @@ return [
     'USUARIO_CONSTESTO' =>'contesto_OK',
     'SECCION_CONFIRMA_ATENCION'=>'confirma-atencion',
     'SECCION_CONFIRMA_JEFE'=>'confirma-jefe',
+<<<<<<< HEAD
+=======
+    'SECCION_SOY_JEFE'=>'soy-jefe',
+    'SECCION_ATENCION-CLIENTE'=>'atencion-cliente',
+>>>>>>> 2cb751a (comit inicial)
     'SECCION_CONDICIONES_VIVIENDA'=>'condiciones-vivienda',
     'SECCION_CONDICIONES_EXTRA'=>'condiciones-extralaborales',
     'SECCION_ESTRES' => 'sintomas-estres',
