@@ -36,7 +36,7 @@
                                         <div class="form-group checkbox-group">
                                             <div class="row" col=12>
                                                 <div class="row" col=12>
-                                                    <label for="sexo">Sexo</label>
+                                                    <label for="sexo">Sexo<span style="color:red">*</span></label>
                                                 </div>
                                                 <div class="row" col=6>
                                                     <label>
@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="anonaci">Año de nacimiento</label>
+                                            <label for="anonaci">Año de nacimiento <span style="color:red">*</span></label>
                                             <i class="fas fa-birthday-cake"></i>
                                             <select id="anonaci" name="anonaci" class="editable">
                                                 <option value="" disabled selected>Seleccione un año</option>
@@ -68,7 +68,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="estadociv">Estado Civil</label>
+                                            <label for="estadociv">Estado Civil<span style="color:red">*</span></label>
                                             <i class="fas fa-heart"></i>
                                             <select id="estadociv" name="estadociv" class="editable">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -86,7 +86,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="nivelEstudio">Nivel de estudios</label>
+                                            <label for="nivelEstudio">Nivel de estudios<span style="color:red">*</span></label>
                                             <i class="fas fa-user-graduate"></i>
                                             <select id="nivelEstudio" name="nivelEstudio" class="editable">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -109,7 +109,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="ocupacion">Ocupación</label>
+                                            <label for="ocupacion">Ocupación<span style="color:red">*</span></label>
                                             <i class="fas fa-hard-hat"></i>
                                             <input class="editable" id="ocupacion" name="ocupacion" type="text" placeholder="Ocupación u oficio" value="{{old('ocupacion')}}">
                                             @error('ocupacion')
@@ -118,7 +118,7 @@
                                         </div> 
                                         
                                         <div class="form-group">
-                                            <label for="residenciadepto">Departamento de residencia</label>
+                                            <label for="residenciadepto">Departamento de residencia<span style="color:red">*</span></label>
                                             <i class="fas fa-map-marker-alt"></i>
                                             <select id="residenciadepto" name="residenciadepto" class="editable">
                                                 <option value="" disabled selected>Selecccione una opción</option>
@@ -132,7 +132,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="residenciaciudad">Ciudad de residencia</label>
+                                            <label for="residenciaciudad">Ciudad de residencia<span style="color:red">*</span></label>
                                             <i class="fas fa-map-marker-alt"></i>
                                             <select id="residenciaciudad" name="residenciaciudad" class="editable" disabled>
                                                  <option value="" disabled selected>Selecccione una opción</option>
@@ -143,7 +143,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="estrato">Estrato de servicios públicos</label>
+                                            <label for="estrato">Estrato de servicios públicos<span style="color:red">*</span></label>
                                             <i class="fas fa-poll"></i>
                                             <select id="estrato" name="estrato" class="editable">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -162,7 +162,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="tipoVivienda">Tipo de vivienda</label>
+                                            <label for="tipoVivienda">Tipo de vivienda<span style="color:red">*</span></label>
                                             <i class="fas fa-home"></i>
                                             <select id="tipoVivienda" name="tipoVivienda" class="editable">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -175,7 +175,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="personasdependientes">Número de personas que dependen economicamente</label>
+                                            <label for="personasdependientes">Número de personas que dependen economicamente<span style="color:red">*</span></label>
                                             <i class="fas fa-users"></i>
                                             <input class="editable" id="personasdependientes" name="personasdependientes" type="number" placeholder="Ingrese el numero de personas" value="{{old('personasdependientes')}}">
                                             @error('personasdependientes')
@@ -183,18 +183,18 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="lugartrabajodpto">Departamento donde trabaja actualmente:</label>
+                                            <label for="lugartrabajodpto">Departamento donde trabaja</label>
                                             <i class="fas fa-map-marker-alt"></i>
                                             <input  class="read-only" id="lugartrabajodpto" name="lugartrabajodpto" type="text" placeholder="Departamento donde trabaja" value="{{Auth::user()->delaciudad}}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="lugartrabajocity">Ciudad donde trabaja actualmente:</label>
+                                            <label for="lugartrabajocity">Ciudad donde trabaja actualmente</label>
                                             <i class="fas fa-map-marker-alt"></i>
                                             <input  class="read-only" id="lugartrabajocity" name="lugartrabajocity" type="text" placeholder="Ciudad donde trabaja" value="{{Auth::user()->deptociudad}}" readonly>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="tiempotrabajo">Hace cuantos años trabaja en esta empresa</label>
+                                            <label for="tiempotrabajo">Hace cuantos años trabaja en esta empresa<span style="color:red">*</span></label>
                                             <i class="fas fa-calendar-check"></i>
                                             <select id="tiempotrabajo" name="tiempotrabajo" class="editable">
                                                 <option value="" disabled selected>Seleccione un opción</option>
@@ -206,15 +206,15 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="cargoempresa">Cargo que ocupa en la empresa</label>
+                                            <label for="cargoempresa">Cargo que ocupa en la empresa<span style="color:red">*</span></label>
                                             <i class="fas fa-hard-hat"></i>
                                             <input  class="read-only" id="cargoempresa" name="cargoempresa" type="text" placeholder="Nombre completo" value="{{Auth::user()->cargo}}" readonly>
                                         </div>         
                                         <div class="form-group">
-                                            <label for="tipocargo">Tipo del cargo</label>
+                                            <label for="tipocargo">Tipo del cargo<span style="color:red">*</span></label>
                                             <i class="fas fa-briefcase"></i>                                           
                                             <select id="tipocargo" name="tipocargo" class="editable">
-                                                <option value="" disabled selected>Seleccione una opción lo mas parecida</option>
+                                                <option value="" disabled selected>Seleccione una opción lo mas parecida<span style="color:red">*</span></option>
                                                 <option value="Jefatura" {{ old('tipocargo') == 'Jefatura' ? 'selected' : '' }}>Jefatura: tiene personal a cargo</option>
                                                 <option value="Profesional, Analista, Técnico, Tecnólogo" {{ old('tipocargo') == 'Profesional, Analista, Técnico, Tecnólogo' ? 'selected' : '' }}>Profesional, Analista, Técnico, Tecnólogo</option>
                                                 <option value="Auxiliar, Asistente Administrativo, Asistente técnico" {{ old('tipocargo') == 'Auxiliar, Asistente Administrativo, Asistente técnico' ? 'selected' : '' }}>Auxiliar, Asistente Administrativo, Asistente técnico</option>
@@ -225,7 +225,7 @@
                                             @enderror 
                                         </div>
                                         <div class="form-group">
-                                            <label for="anoscargo">Hace cuantos años trabaja en el cargo</label>
+                                            <label for="anoscargo">Hace cuantos años trabaja en el cargo<span style="color:red">*</span></label>
                                             <i class="fas fa-calendar-check"></i>
                                             <select id="anoscargo" name="anoscargo" class="editable">
                                                 <option value="" disabled selected>Seleccione un opción</option>
@@ -238,13 +238,13 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="nombredepto">Area de trabajo</label>
+                                            <label for="nombredepto">Area de trabajo<span style="color:red">*</span></label>
                                             <i class="fas fa-network-wired"></i>
                                             <input  class="read-only" id="nombredepto" name="nombredepto" type="text" placeholder="Area de trabajo" value="{{Auth::user()->areatrabajo}}" readonly>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="contratoactual">Tipo de contrato actual</label>
+                                            <label for="contratoactual">Tipo de contrato actual<span style="color:red">*</span></label>
                                             <i class="fas fa-file-signature"></i>
                                             <select id="contratoactual" name="contratoactual" class="editable">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -261,7 +261,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="horastrabajo">Número de horas que trabaja al día</label>
+                                            <label for="horastrabajo">Número de horas que trabaja al día<span style="color:red">*</span></label>
                                             <i class="fas fa-business-time"></i>
                                             <input class="editable"  id="horastrabajo" name="horastrabajo" type="number" placeholder="Numero de horas trabajadas" value="{{old('horastrabajo')}}">
                                             @error('horastrabajo')
@@ -270,7 +270,7 @@
                                         </div>
 	           
                                         <div class="form-group">
-                                            <label for="tiposalario">Tipo de salario</label>
+                                            <label for="tiposalario">Tipo de salario<span style="color:red">*</span></label>
                                             <i class="fas fa-money-check-alt"></i>
                                             <select id="tiposalario" name="tiposalario" class="editable">
                                             <option value selected disabled = "">Seleccione Opción...</option>
