@@ -181,6 +181,7 @@ class EncuestasController extends Controller
             $opciones = $this->obtenerOpcionesPreguntas($seccion->route);
             
             $preguntas = $this->obtenerValorPreguntas($seccion); 
+            
             return view('encuesta.preguntas', compact('preguntas','seccion','fichaDato', 'proximaSeccionId', 'prefijoPreguntas', 'sufijoPreguntas', 'opciones','total','avance'));
         }
         return view('encuesta.sinpreguntas', compact('seccion','fichaDato', 'proximaSeccionId'));
@@ -210,6 +211,7 @@ class EncuestasController extends Controller
   
                 $modelClass = $seccion->modelo;
             
+               
                 if (!class_exists($modelClass) ) {
                     return redirect()->back()
                                     ->with('error', 'Modelo no válido.');
