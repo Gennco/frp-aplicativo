@@ -15,13 +15,11 @@ class InformesIntralaboralesController extends Controller
         $sumas = DB::table('a10')
         ->join('a11', 'a10.registro', '=', 'a11.registro')
         ->join('a12', 'a10.registro', '=', 'a12.registro')
-        ->join('a15', 'a10.registro', '=', 'a15.registro')
         ->join('a8', 'a10.registro', '=', 'a8.registro')
         ->join('a9', 'a10.registro', '=', 'a9.registro')
         ->join('a7', 'a10.registro', '=', 'a7.registro')
         ->join('a6', 'a10.registro', '=', 'a6.registro')
         ->join('a1', 'a10.registro', '=', 'a1.registro')
-        ->join('a14', 'a10.registro', '=', 'a14.registro')
         ->join('a2', 'a10.registro', '=', 'a2.registro')
         ->join('a5', 'a10.registro', '=', 'a5.registro')
         ->join('a3', 'a10.registro', '=', 'a3.registro')
@@ -32,14 +30,12 @@ class InformesIntralaboralesController extends Controller
             DB::raw('(p63 + p64 + p65 + p66 + p67 + p68 + p69 + p70 + p71 + p72 + p73 + p74 + p75) AS suma1'),
             DB::raw('(p76 + p77 + p78 + p79 + p80 + p81 + p82 + p83 + p84 + p85 + p86 + p87 + p88 + p89) AS suma2'),
             DB::raw('(p90 + p91 + p92 + p93 + p94) AS suma3'),
-            DB::raw('(p115 + p116 + p117 + p118+ p119 + p120 + p121 + p122 + p123) AS suma4'),
             DB::raw('(p53 + p54 + p55 + p56 + p57 + p58 + p59) AS suma5'),
             DB::raw('(p60 + p61 + p62) AS suma6'),
             DB::raw('(p48 + p49 + p50 + p51) AS suma7'),
             DB::raw('(p39 + p40 + p41 + p42) AS suma8'),
             DB::raw('(p44 + p45 + p46) AS suma9'),
             DB::raw('(p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8+ p9 + p10 + p11 + p12) AS suma10'),
-            DB::raw('(p106 + p107 + p108 + p109 + p110 + p111 + p112 + p113 + p114) AS suma11'),
             DB::raw('(p13 + p14 + p15 + p32 + p43 + p47) AS suma12'),
             DB::raw('(p35 + p36 + p37 + p38) AS suma13'),
             DB::raw('(p19 + p22 + p23 + p24 + p25 + p26) AS suma14'),
@@ -47,21 +43,19 @@ class InformesIntralaboralesController extends Controller
             DB::raw('(p27 + p28+ p29 + p30 + p52) AS suma16'),
             DB::raw('(p31 + p33 + p34) AS suma17'),
             DB::raw('(p95 + p102 + p103 + p104 + p105) AS suma18'),
-            DB::raw('(p96 + p97 + p98 + p99 + p100 + p101) AS suma19')
+            DB::raw('(p96 + p97 + p98 + p99 + p100 + p101) AS suma19'),
         )->get()
         ->mapWithKeys(function ($item) {
             return [
                 'suma1' => $item->suma1,
                 'suma2' => $item->suma2,
                 'suma3' => $item->suma3,
-                'suma4' => $item->suma4,
                 'suma5' => $item->suma5,
                 'suma6' => $item->suma6,
                 'suma7' => $item->suma7,
                 'suma8' => $item->suma8,
                 'suma9' => $item->suma9,
                 'suma10' => $item->suma10,
-                'suma11' => $item->suma11,
                 'suma12' => $item->suma12,
                 'suma13' => $item->suma13,
                 'suma14' => $item->suma14,
@@ -73,16 +67,40 @@ class InformesIntralaboralesController extends Controller
             ];
         })
         ->toArray();
-               
+
+        $sumas4 = DB::table('a14')
+        ->where('a14.registro', $fichadatos->registro)
+        ->select(
+            DB::raw('(p106 + p107 + p108 + p109 + p110 + p111 + p112 + p113 + p114) AS suma11'),
+        )->get()
+        ->mapWithKeys(function ($item) {
+            return [
+                'suma4' => $item->suma4, 
+            ];
+        })
+        ->toArray();
+       
+        $sumas11 = DB::table('a15')
+        ->where('a15.registro', $fichadatos->registro)
+        ->select(
+            DB::raw('(p115 + p116 + p117 + p118+ p119 + p120 + p121 + p122 + p123) AS suma4'),
+        )->get()
+        ->mapWithKeys(function ($item) {
+            return [
+                'suma11' => $item->suma11, 
+            ];
+        })
+        ->toArray();
+     
         $caracteristicasLiderazgo = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma1',52,[3.8, 15.4, 30.8, 46.2, 100]);
 
         $relacionesSociales =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma2',56,[5.4,16.1,25,37.5,100]);
 
         $retroalimentacion = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma3',20,[10,25,40,55,100]);
         
-        $realcionColaboradores = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma4',36,[13.9,25,33.3,47.2,100]);
-       
-        $sumaDominioCaracteristicasLiderzgo = ($sumas['suma1'] ?? 0) + ($sumas['suma2'] ?? 0) + ($sumas['suma3']  ?? 0) + ($sumas['suma4']  ?? 0) ;        
+        $realcionColaboradores = Util::calcularRiesgoYPuntajeDimensiones($sumas4,'suma4',36,[13.9,25,33.3,47.2,100]);
+     
+        $sumaDominioCaracteristicasLiderzgo = ($sumas['suma1'] ?? 0) + ($sumas['suma2'] ?? 0) + ($sumas['suma3']  ?? 0) + ($sumas4['suma4']  ?? 0) ;        
         $dominioRelacionesCaracteristicasLIderazgo = Util::calcularRiesgoYPuntajeDominios($sumaDominioCaracteristicasLiderzgo,164,[9.1,17.7,25.6,34.8,100]);
 
         $claridadRol =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma5',28,[0.9,10.7,21.4,39.3,100]);
@@ -100,7 +118,7 @@ class InformesIntralaboralesController extends Controller
 
         $demandasAmbientales = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma10',48,[14.6,22.9,31.3,39.6,100]);
         
-        $demandasEmocionales =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma11',36,[16.7,25,33.3,47.2,100]);
+        $demandasEmocionales =  Util::calcularRiesgoYPuntajeDimensiones($sumas11,'suma11',36,[16.7,25,33.3,47.2,100]);
 
         $demandasCuantitativas =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma12',24,[25,33.3,45.8,54.2,100]);
 
@@ -114,7 +132,7 @@ class InformesIntralaboralesController extends Controller
         
         $demandasJornada = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma17',12,[8.3,25,33.3,50,100]);
 
-        $sumaDominioDemandas = ($sumas['suma10'] ?? 0) + ($sumas['suma11'] ?? 0) + ($sumas['sumas12'] ?? 0)
+        $sumaDominioDemandas = ($sumas['suma10'] ?? 0) + ($sumas11['suma11'] ?? 0) + ($sumas['sumas12'] ?? 0)
         + ($sumas['suma13'] ?? 0) + ($sumas['suma14'] ?? 0) + ($sumas['suma15'] ?? 0) +  + ($sumas['suma16'] ?? 0) + ($sumas['suma17'] ?? 0);
         $dominioDemandasTrabajo = Util::calcularRiesgoYPuntajeDominios($sumaDominioDemandas,200,[28.5,35,41.5,47.5,100]);
 
@@ -206,7 +224,6 @@ class InformesIntralaboralesController extends Controller
         ->join('4b', '10b.registro', '=', '4b.registro')
         ->join('3b', '10b.registro', '=', '3b.registro')
         ->join('15b', '10b.registro', '=', '15b.registro')
-        ->join('16b', '10b.registro', '=', '16b.registro')
         ->where('10b.registro', $fichadatos->registro)
         ->select(
             DB::raw('(p49 + p50 + p51 + p52 + p53 + p54 + p55 + p56 + p57 + p58 + p59 + p60 + p61) AS suma1'),
@@ -223,8 +240,7 @@ class InformesIntralaboralesController extends Controller
             DB::raw('(p16 + p17 + p18 + p19 + p20) AS suma12'),
             DB::raw('(p21 + p22 + p23 + p24 + p33 + p37) AS suma13'),
             DB::raw('(p85 + p86 + p87 + p88) AS suma14'),
-            DB::raw('(p79 + p80 + p81 + p82 + p83 + p84) AS suma15'),
-            DB::raw('(p89 + p90 + p91 + p92 + p93 + p94 + p95 + p96 +p97) AS suma16')
+            DB::raw('(p79 + p80 + p81 + p82 + p83 + p84) AS suma15')
         )->get()
         ->mapWithKeys(function ($item) {
             return [
@@ -242,7 +258,18 @@ class InformesIntralaboralesController extends Controller
                 'suma12' => $item->suma12,
                 'suma13' => $item->suma13,
                 'suma14' => $item->suma14,
-                'suma15' => $item->suma15,
+                'suma15' => $item->suma15
+            ];
+        })
+        ->toArray();
+
+        $sumas16 = DB::table('16b')
+        ->where('16b.registro', $fichadatos->registro)
+        ->select(
+            DB::raw('(p89 + p90 + p91 + p92 + p93 + p94 + p95 + p96 +p97) AS suma16')
+        )->get()
+        ->mapWithKeys(function ($item) {
+            return [
                 'suma16' => $item->suma16,
             ];
         })
@@ -272,7 +299,7 @@ class InformesIntralaboralesController extends Controller
 
         $demandasAmbientales = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma9',48,[29.9,31.3,39.6,47.9,100]);
         
-        $demandasEmocionales =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma16',36,[19.4,27.8,38.9,47.2,100]);
+        $demandasEmocionales =  Util::calcularRiesgoYPuntajeDimensiones($sumas16,'suma16',36,[19.4,27.8,38.9,47.2,100]);
 
         $demandasCuantitativas =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma10',12,[16.7,33.3,41.7,50,100]);
 
@@ -282,7 +309,7 @@ class InformesIntralaboralesController extends Controller
 
         $demandasJornada = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma13',24,[25,37.5,45.8,58.3,100]);
 
-        $sumaDominioDemandas = ($sumas['suma9'] ?? 0) + ($sumas['suma16'] ?? 0) + ($sumas['sumas10'] ?? 0)
+        $sumaDominioDemandas = ($sumas['suma9'] ?? 0) + ($sumas16['suma16'] ?? 0) + ($sumas['sumas10'] ?? 0)
         + ($sumas['suma11'] ?? 0) + ($sumas['suma12'] ?? 0) + ($sumas['suma13'] ?? 0);
         $dominioDemandasTrabajo = Util::calcularRiesgoYPuntajeDominios($sumaDominioDemandas,156,[26.9,33.3,37.8,44.2,100]);
 

@@ -7,18 +7,13 @@ use Illuminate\Support\Facades\Log;
 class UtilitariosInforme
 {
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
-        $valorSuma = $sumas[$claveSuma] ?? null;
-        Log::Info('valor suma dimension',['suma'=>$valorSuma]);
+        
+        $valorSuma = empty($sumas) ?  null : $sumas[$claveSuma] ;
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
-        Log::Info('promedio', ['promedio'=>$promedio]);
         $total = $promedio ? $promedio * 100 : null;
-        Log::Info('total', ['total'=>$total]);
         $transformado = self::transformarNumero($total);
-        Log::Info('transformado', ['transformado'=>$transformado]);
         $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
-        Log::Info('riesgo', ['riesgo'=>$riesgo]);
         $puntaje = $transformado ?? 0;
-        Log::Info('puntaje', ['puntaje'=>$puntaje]);
     
         return (object) [
             'riesgo' => $riesgo,
@@ -29,17 +24,11 @@ class UtilitariosInforme
 
     public function calcularRiesgoYPuntajeDominios($sumaDomnio, $divisorPromedio, $rangosRiesgo) {
         $valorSuma = $sumaDomnio ?? null;
-        Log::info('valor suma dominio ',['suma'=>$valorSuma]);
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
-        Log::info('promedio dominio ',['promedio'=>$promedio]);
         $total = $promedio ? $promedio * 100 : null;
-        Log::info('total dominio ',['total'=>$total]);
         $transformado = self::transformarNumero($total);
-        Log::info('transformado dominio ',['transformado'=>$transformado]);
         $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
-        Log::info('riesgo dominio ',['riesgo'=>$riesgo]);
         $puntaje = $transformado ?? 0;
-        Log::info('puntaje dominio ',['puntaje'=>$puntaje]);
     
         return (object) [
             'riesgo' => $riesgo,
@@ -75,8 +64,11 @@ class UtilitariosInforme
     }
 
     public function determinarRiesgo($puntaje, $limitesRiesgo){
-    
+        if($puntaje == null){
+            return "NO APLICA";
+        }
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
+       
         switch (true) {
             case ($puntaje <= $limiteSR):
                 $riesgo = 'SIN RIESGO';
