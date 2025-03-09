@@ -49,7 +49,7 @@
                                     <div class="table-row">
                                         <div class="question-col">
                                             <span class="question-number">{{ $pregunta->orden }}.</span>
-                                            {{$pregunta->pregunta }}
+                                            {{$pregunta->pregunta }}<span style="color:red">*</span>
                                         </div>
                                         @foreach ($pregunta->opciones as $opcion)
                                             <div class="options-col" data-option-name="{{$opcion->nombre}}">
