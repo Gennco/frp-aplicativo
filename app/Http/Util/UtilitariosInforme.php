@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Log;
 class UtilitariosInforme
 {
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
-        $valorSuma = $sumas[$claveSuma] ?? null;
+       
+        $valorSuma = empty($sumas) ?  null : $sumas[$claveSuma] ;
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
         $total = $promedio ? $promedio * 100 : null;
         $transformado = self::transformarNumero($total);
@@ -63,8 +64,11 @@ class UtilitariosInforme
     }
 
     public function determinarRiesgo($puntaje, $limitesRiesgo){
-    
+        if($puntaje == null){
+            return "NO APLICA";
+        }
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
+       
         switch (true) {
             case ($puntaje <= $limiteSR):
                 $riesgo = 'SIN RIESGO';
