@@ -2,7 +2,6 @@
 
 namespace App\Http\Util;
 
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Log;
 
 class UtilitariosInforme
@@ -69,20 +68,12 @@ class UtilitariosInforme
 
     public function transformarNumero($resultado){
         if($resultado != null){
-=======
-class UtilitariosInforme
-{
-
-     public function transformarNumero($resultado){
-        if(!empty($resultado)){
->>>>>>> develop
             return number_format($resultado,1,".",",");
         }else{
             return null;
         } 
     }
 
-<<<<<<< HEAD
     public function determinarRiesgo($puntaje, $limitesRiesgo){
     
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
@@ -107,32 +98,6 @@ class UtilitariosInforme
                 break;
         }
       
-=======
-    public function determinarRiesgo($puntaje, $limiteSR, $limiteRB, $limiteRM, $limiteRA,$limiteRMA){
-        $riesgo = "NO APLICA";
-        if(!empty($puntaje)){
-            switch (true) {
-                case ($puntaje <= $limiteSR):
-                    $riesgo = 'SIN RIESGO';
-                    break;
-                case ($puntaje <= $limiteRB):
-                    $riesgo = 'RIESGO BAJO';
-                    break;
-                case ($puntaje <= $limiteRM):
-                    $riesgo = 'RIESGO MEDIO';
-                    break;
-                case ($puntaje <= $limiteRA):
-                    $riesgo = 'RIESGO ALTO';
-                    break;
-                case ($puntaje <= $limiteRMA):
-                    $riesgo = 'RIESGO MUY ALTO';
-                    break;
-                default:
-                    $riesgo = 'NO APLICA';
-                    break;
-            }
-        }
->>>>>>> develop
         return $riesgo;
     }
 }

@@ -16,14 +16,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
 use App\Http\Requests\PreguntasRequest;
-<<<<<<< HEAD
 use App\Http\Controllers\InformesIntralaboralesController;
 use App\Http\Controllers\InformesExtralaboralesController;
 use App\Http\Controllers\InformesEstresController;
 use App\Http\Controllers\InformesAfrontamientoController;
-=======
-use App\Http\Controllers\InformesController;
->>>>>>> develop
 use Illuminate\Support\Facades\Config;
 
 
@@ -515,7 +511,6 @@ class EncuestasController extends Controller
         switch ($ruta) {
             case config('constants.SECCION_CONFIRMA_ATENCION'):
                 if(($tipo == config('constants.TIPO_B') ) && $proximaSeccionId == config('constants.SECCION_CONDICIONES_VIVIENDA')){
-<<<<<<< HEAD
                     InformesIntralaboralesController::generarInformeIntraB($fichaDato);
                 }
                 break;
@@ -545,23 +540,6 @@ class EncuestasController extends Controller
             case config('constants.SECCION_AFRONTAMIENTO_III'):
                 InformesAfrontamientoController::generarInformeAfrontamiento($fichaDato); 
                 break;      
-=======
-                   return false;
-                }
-                break;
-
-            case  config('constants.SECCION_CONFIRMA_ATENCION'): 
-                return false;
-                break;
-            case config('constants.SECCION_CONFIRMA_JEFE'):
-                if($proximaSeccionId == config('constants.SECCION_CONDICIONES_VIVIENDA')){
-                    InformesController::generarInformeIntraA($fichaDato);
-                }
-                break;
-            case config('constants.SECCION_SOY_JEFE'):
-                InformesController::generarInformeIntraA($fichaDato); 
-                break;
->>>>>>> develop
              
             default:
                 return false;
