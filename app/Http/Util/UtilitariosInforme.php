@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 class UtilitariosInforme
 {
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
-        
+       
         $valorSuma = empty($sumas) ?  null : $sumas[$claveSuma] ;
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
         $total = $promedio ? $promedio * 100 : null;
