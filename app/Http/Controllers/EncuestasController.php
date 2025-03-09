@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
 use App\Http\Requests\PreguntasRequest;
+use App\Http\Controllers\InformesIntralaboralesController;
+use App\Http\Controllers\InformesExtralaboralesController;
+use App\Http\Controllers\InformesEstresController;
+use App\Http\Controllers\InformesAfrontamientoController;
 use Illuminate\Support\Facades\Config;
 
 
@@ -159,7 +163,7 @@ class EncuestasController extends Controller
             $ruta = $fichaDato->tablacontestada;
             $tipo = Auth::user()->nivelSeguridad;
             return redirect()->route('encuesta.preguntas.noPermitido')->with(['tipo' => strtolower($tipo), 'ruta' => $ruta]);
-        }
+            }
         $secciones = $this->obtenerRutasValidas(strtoupper($request->tipo), Auth::user()->afrontamiento, Auth::user()->adicional);
         $total = $secciones->count();
         $indiceSeccion = $this->obtenerIndiceAvance($secciones, $request->seccion); 
