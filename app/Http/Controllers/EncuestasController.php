@@ -11,6 +11,7 @@ use App\Models\Municipio;
 use App\Models\Seccion;
 use App\Models\Opcion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
@@ -180,7 +181,6 @@ class EncuestasController extends Controller
             $opciones = $this->obtenerOpcionesPreguntas($seccion->route);
             
             $preguntas = $this->obtenerValorPreguntas($seccion); 
-            
             return view('encuesta.preguntas', compact('preguntas','seccion','fichaDato', 'proximaSeccionId', 'prefijoPreguntas', 'sufijoPreguntas', 'opciones','total','avance'));
         }
         return view('encuesta.sinpreguntas', compact('seccion','fichaDato', 'proximaSeccionId'));
@@ -209,6 +209,7 @@ class EncuestasController extends Controller
                 
   
                 $modelClass = $seccion->modelo;
+            
                
                 if (!class_exists($modelClass) ) {
                     return redirect()->back()
@@ -254,6 +255,8 @@ class EncuestasController extends Controller
 
                 }
             }
+
+            $this->generarInforme($seccion->route, $proximaSeccionId, $request->tipo, $fichaDato);
 
             return redirect()->route('encuesta.preguntas', ['tipo' =>strtolower($request->tipo),'seccion'=>$proximaSeccionId])
                             ->with('success', 'Respuestas guardadas correctamente.');

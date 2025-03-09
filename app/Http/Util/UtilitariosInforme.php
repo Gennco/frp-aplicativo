@@ -8,17 +8,11 @@ class UtilitariosInforme
 {
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
         $valorSuma = $sumas[$claveSuma] ?? null;
-        Log::Info('valor suma dimension',['suma'=>$valorSuma]);
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
-        Log::Info('promedio', ['promedio'=>$promedio]);
         $total = $promedio ? $promedio * 100 : null;
-        Log::Info('total', ['total'=>$total]);
         $transformado = self::transformarNumero($total);
-        Log::Info('transformado', ['transformado'=>$transformado]);
         $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
-        Log::Info('riesgo', ['riesgo'=>$riesgo]);
         $puntaje = $transformado ?? 0;
-        Log::Info('puntaje', ['puntaje'=>$puntaje]);
     
         return (object) [
             'riesgo' => $riesgo,
