@@ -93,12 +93,12 @@
                                                 <option value="NINGUNO" {{ old('nivelEstudio') == 'NINGUNO'? 'selected' : '' }}>Ninguno</option>
                                                 <option value="PRIMARIA INCOMPLETA" {{ old('nivelEstudio') == 'PRIMARIA INCOMPLETA'? 'selected' : '' }}>Primaria incompleta</option>
                                                 <option value="PRIMARIA COMPLETA" {{ old('nivelEstudio') == 'PRIMARIA COMPLETA'? 'selected' : '' }}>Primaria completa</option>
-                                                <option value="BACHILLERATO INCOMPLETO" {{ old('nivelEstudio') == 'BACHILLERATO INCOMPLETO"'? 'selected' : '' }}>Bachillerato in completo</option>
+                                                <option value="BACHILLERATO INCOMPLETO" {{ old('nivelEstudio') == 'BACHILLERATO INCOMPLETO"'? 'selected' : '' }}>Bachillerato incompleto</option>
                                                 <option value="BACHILLERATO COMPLETO" {{ old('nivelEstudio') == 'BACHILLERATO COMPLETO'? 'selected' : '' }}>Bachillerato completo</option>
                                                 <option value="TECNICO INCOMPLETO" {{ old('nivelEstudio') == 'TECNICO INCOMPLETO'? 'selected' : '' }}>Técnico / tecnológico incompleto</option>
                                                 <option value="TECNICO COMPLETO" {{ old('nivelEstudio') == 'TECNICO COMPLETO'? 'selected' : '' }}>Técnico / tecnológico completo</option>
                                                 <option value="PROFESIONAL INCOMPLETO" {{ old('nivelEstudio') == 'PROFESIONAL INCOMPLETO'? 'selected' : '' }}>Profesional incompleto</option>
-                                                <option value="PROFESIONAL COMPLETO" {{ old('nivelEstudio') == 'PROFESIONAL COMPLETO'? 'selected' : '' }}>Profesional incompleto</option>
+                                                <option value="PROFESIONAL COMPLETO" {{ old('nivelEstudio') == 'PROFESIONAL COMPLETO'? 'selected' : '' }}>Profesional completo</option>
                                                 <option value="CARRERA MILITAR" {{ old('nivelEstudio') == 'CARRERA MILITAR'? 'selected' : '' }}>Carrera Militar / Policía</option>
                                                 <option value="POST-GRADO INCOMPLETO" {{ old('nivelEstudio') == 'POST-GRADO INCOMPLETO'? 'selected' : '' }}>Post-grado incompleto</option>
                                                 <option value="POST-GRADO COMPLETO" {{ old('nivelEstudio') == 'POST-GRADO COMPLETO'? 'selected' : '' }}>Post-grado completo</option>
