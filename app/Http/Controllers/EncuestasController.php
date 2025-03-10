@@ -110,6 +110,7 @@ class EncuestasController extends Controller
                 $empleado->update([
                     'consentimiento' => $request->input('consentimiento'),
                     'habilitado' => config('constants.USUARIO_COMPLETO'),
+                    'tipoencuesta' => 'noconsentimiento',
                     'llave' => config('constants.USUARIO_LLAVE')
                 ]); 
                 return redirect()->intended('encuesta/no-consentimiento');    
