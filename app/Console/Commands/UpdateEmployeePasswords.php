@@ -29,7 +29,7 @@ class UpdateEmployeePasswords extends Command
     {
         DB::table('empleados')->cursor()->each(function ($empleado) {
             DB::table('empleados')
-                ->where('id', $empleado->id)
+                ->where('registro', $empleado->registro)
                 ->update(['contrasena' => Hash::make($empleado->cedula)]);
         });
     
