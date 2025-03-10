@@ -27,14 +27,12 @@ class UpdateEmployeePasswords extends Command
      */
     public function handle()
     {
-        $empleados = DB::table('empleados')->get();
-
-        foreach ($empleados as $empleado) {
+        DB::table('empleados')->cursor()->each(function ($empleado) {
             DB::table('empleados')
-                ->where('registro', $empleado->registro)
+                ->where('id', $empleado->id)
                 ->update(['contrasena' => Hash::make($empleado->cedula)]);
-        }
-
-        $this->info('Las contraseñas de los empleados han sido actualizadas correctamente.');
+        });
+    
+        $this->info('Contraseñas actualizadas correctamente.');
     }
 }
