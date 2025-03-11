@@ -1,7 +1,9 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmpleadoAuthController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\EncuestasController;
 
 /*
@@ -16,6 +18,10 @@ use App\Http\Controllers\EncuestasController;
 */
 
 Route::get('/', function () {
+    if(session('authenticated_empleado_id') != null){
+       
+        return redirect(RouteServiceProvider::HOME);
+    }
     return view('auth.empleado-login');
 });
 
