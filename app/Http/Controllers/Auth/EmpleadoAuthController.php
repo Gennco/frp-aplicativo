@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EncuestasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,6 @@ class EmpleadoAuthController extends Controller
 
     public function login(Request $request)
     {
-
         $rules = [
             'cedula' => ['required'],
             'contrasena' => ['required'],
