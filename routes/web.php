@@ -18,7 +18,7 @@ use App\Http\Controllers\EncuestasController;
 */
 
 Route::get('/', function () {
-    if(Auth::user()){
+    if(session('authenticated_empleado_id') != null){
        
         return redirect(RouteServiceProvider::HOME);
     }
