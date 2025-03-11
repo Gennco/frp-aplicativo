@@ -68,26 +68,26 @@ class InformesIntralaboralesController extends Controller
         })
         ->toArray();
 
-        $sumas4 = DB::table('a14')
+        $sumas11 = DB::table('a14')
         ->where('a14.registro', $fichadatos->registro)
         ->select(
             DB::raw('(p106 + p107 + p108 + p109 + p110 + p111 + p112 + p113 + p114) AS suma11'),
         )->get()
         ->mapWithKeys(function ($item) {
             return [
-                'suma4' => $item->suma4, 
+                'suma11' => $item->suma11, 
             ];
         })
         ->toArray();
        
-        $sumas11 = DB::table('a15')
+        $sumas4 = DB::table('a15')
         ->where('a15.registro', $fichadatos->registro)
         ->select(
             DB::raw('(p115 + p116 + p117 + p118+ p119 + p120 + p121 + p122 + p123) AS suma4'),
         )->get()
         ->mapWithKeys(function ($item) {
             return [
-                'suma11' => $item->suma11, 
+                'suma4' => $item->suma4, 
             ];
         })
         ->toArray();
