@@ -22,7 +22,7 @@ class ActualizarContrasenas extends Command
 
         // Obtiene las cédulas de los empleados filtrados
         $empleados = DB::table('empleados')
-            ->whereIn('registro', $registros)
+            ->whereIn('cedula', $registros)
             ->pluck('cedula', 'registro'); // Devuelve un array [registro => cedula]
 
         if ($empleados->isEmpty()) {
