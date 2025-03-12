@@ -107,7 +107,7 @@ class InformesIntralaboralesController extends Controller
 
         $capacitacion =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma6',12,[0.9,16.7,33.3,50,100]);
         
-        $particiapcion = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma7',16,[12.5,25,37.5,50,100]);
+        $participacion = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma7',16,[12.5,25,37.5,50,100]);
 
         $oportunidades = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma8',16,[0.9,6.3,18.8,31.3,100]);
 
@@ -159,7 +159,7 @@ class InformesIntralaboralesController extends Controller
             'informea_totaldominioliderazgo'=>$dominioRelacionesCaracteristicasLIderazgo->puntaje, 
             'informea_claridadrol'=>$claridadRol->puntaje, 
             'informea_capacitacion'=>$capacitacion->puntaje, 
-            'informea_participacionmanejo'=>$particiapcion->puntaje, 
+            'informea_participacionmanejo'=>$participacion->puntaje, 
             'informea_oportunidadeshabilidades'=>$oportunidades->puntaje, 
             'informea_controlautonomia'=>$control->puntaje, 
             'informea_totaldominiocontrol'=>$dominioControlAutonomia->puntaje, 
@@ -183,7 +183,7 @@ class InformesIntralaboralesController extends Controller
             'informea_riesgoliderazgototal'=>$dominioRelacionesCaracteristicasLIderazgo->riesgo, 
             'informea_riesgocontrol1'=>$claridadRol->riesgo, 
             'informea_riesgocontrol2'=>$capacitacion->riesgo, 
-            'informea_riesgocontrol3'=>$particiapcion->riesgo, 
+            'informea_riesgocontrol3'=>$participacion->riesgo, 
             'informea_riesgocontrol4'=>$oportunidades->riesgo, 
             'informea_riesgocontrol5'=>$control->riesgo, 
             'informea_riesgocontroltotal'=>$dominioControlAutonomia->riesgo, 
@@ -288,7 +288,7 @@ class InformesIntralaboralesController extends Controller
 
         $capacitacion =  Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma5',12,[0.9,16.7,25,50,100]);
         
-        $particiapcion = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma6',16,[16.7,33.3,41.7,58.3,100]);
+        $participacion = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma6',12,[16.7,33.3,41.7,58.3,100]);
 
         $oportunidades = Util::calcularRiesgoYPuntajeDimensiones($sumas,'suma7',16,[12.5,25,37.5,56.3,100]);
 
@@ -325,7 +325,7 @@ class InformesIntralaboralesController extends Controller
         $data = [ 
             'NumeroFolio' => $fichadatos->NumeroFolio,
             'registro'=>$fichadatos->registro,
-            'informeb_cedula'=>$fichadatos->cedula,
+                'informeb_cedula'=>$fichadatos->cedula,
             'informeb_empresa'=>$fichadatos->empresas,
             'informeb_area'=>$fichadatos->cargoempresa,
             'informeb_ciudadtrabajo'=>$fichadatos->lugartrabajocity, 
@@ -336,7 +336,7 @@ class InformesIntralaboralesController extends Controller
             'informeb_totaldominioliderazgo'=>$dominioRelacionesCaracteristicasLIderazgo->puntaje, 
             'informeb_claridadrol'=>$claridadRol->puntaje, 
             'informeb_capacitacion'=>$capacitacion->puntaje, 
-            'informeb_participacionmanejo'=>$particiapcion->puntaje, 
+            'informeb_participacionmanejo'=>$participacion->puntaje, 
             'informeb_oportunidadeshabilidades'=>$oportunidades->puntaje, 
             'informeb_controlautonomia'=>$control->puntaje, 
             'informeb_totaldominiocontrol'=>$dominioControlAutonomia->puntaje, 
@@ -360,7 +360,7 @@ class InformesIntralaboralesController extends Controller
             'informeb_riesgoliderazgototal'=>$dominioRelacionesCaracteristicasLIderazgo->riesgo, 
             'informeb_riesgocontrol1'=>$claridadRol->riesgo, 
             'informeb_riesgocontrol2'=>$capacitacion->riesgo, 
-            'informeb_riesgocontrol3'=>$particiapcion->riesgo, 
+            'informeb_riesgocontrol3'=>$participacion->riesgo, 
             'informeb_riesgocontrol4'=>$oportunidades->riesgo, 
             'informeb_riesgocontrol5'=>$control->riesgo, 
             'informeb_riesgocontroltotal'=>$dominioControlAutonomia->riesgo, 
