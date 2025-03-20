@@ -70,6 +70,12 @@ class UtilitariosInforme
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
        
         switch (true) {
+            case ($puntaje == 0.0)
+                $riesgo = 'SIN RIESGO';
+                break
+            case ($puntaje == 0)
+                $riesgo = 'SIN RIESGO';
+            break    
             case ($puntaje <= $limiteSR):
                 $riesgo = 'SIN RIESGO';
                 break;
@@ -84,9 +90,6 @@ class UtilitariosInforme
                 break;
             case ($puntaje <= $limiteRMA):
                 $riesgo = 'RIESGO MUY ALTO';
-                break;
-            default:
-                $riesgo = 'NO APLICA';
                 break;
         }
       
