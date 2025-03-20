@@ -356,7 +356,7 @@ class InformesIntralaboralesController extends Controller
             'informeb_riesgoliderazgo1'=>$caracteristicasLiderazgo->riesgo, 
             'informeb_riesgoliderazgo2'=>$relacionesSociales->riesgo, 
             'informeb_riesgoliderazgo3'=>$retroalimentacion->riesgo,
-            'informeb_riesgoliderazgo4'=>"NO APLICA"
+            'informeb_riesgoliderazgo4'=>"NO APLICA",
             'informeb_riesgoliderazgototal'=>$dominioRelacionesCaracteristicasLIderazgo->riesgo, 
             'informeb_riesgocontrol1'=>$claridadRol->riesgo, 
             'informeb_riesgocontrol2'=>$capacitacion->riesgo, 
