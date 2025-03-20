@@ -72,10 +72,10 @@ class UtilitariosInforme
         switch (true) {
             case ($puntaje == 0.0) :
                 $riesgo = 'SIN RIESGO';
-                break
+                break;
             case ($puntaje == 0) :
                 $riesgo = 'SIN RIESGO';
-            break    
+                break;    
             case ($puntaje <= $limiteSR):
                 $riesgo = 'SIN RIESGO';
                 break;
