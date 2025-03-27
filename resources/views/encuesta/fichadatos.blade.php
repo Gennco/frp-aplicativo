@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label for="sede">Sede/ sucursal/ sección</label>
                                             <i class="fas fa-city"></i>
-                                            <input class="read-only" id="sede" name="sede" type="text" placeholder="Sede o sucursal" value="{{Auth::user()->sede}}" readonly>
+                                            <input class="read-only" id="sede" name="sede" type="text" placeholder="Sede o sucursal" value="{{empty(Auth::user()->sede) ? 'NO REGISTRA': Auth::user()->sede;}}" readonly>
                                         </div>
                                         <div class="form-group full-width">
                                             <label for="nombre">Nombre Completo</label>
@@ -183,14 +183,14 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="lugartrabajodpto">Departamento donde trabaja</label>
+                                            <label for="lugartrabajodpto">Ciudad donde trabaja</label>
                                             <i class="fas fa-map-marker-alt"></i>
-                                            <input  class="read-only" id="lugartrabajodpto" name="lugartrabajodpto" type="text" placeholder="Departamento donde trabaja" value="{{Auth::user()->delaciudad}}" readonly>
+                                            <input  class="read-only" id="lugartrabajodpto" name="lugartrabajodpto" type="text" placeholder="Departamento donde trabaja" value="{{empty(Auth::user()->delaciudad) ? 'NO REGISTRA': Auth::user()->delaciudad;}}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="lugartrabajocity">Ciudad donde trabaja actualmente</label>
+                                            <label for="lugartrabajocity">Departamento donde trabaja actualmente</label>
                                             <i class="fas fa-map-marker-alt"></i>
-                                            <input  class="read-only" id="lugartrabajocity" name="lugartrabajocity" type="text" placeholder="Ciudad donde trabaja" value="{{Auth::user()->deptociudad}}" readonly>
+                                            <input  class="read-only" id="lugartrabajocity" name="lugartrabajocity" type="text" placeholder="Ciudad donde trabaja" value="{{empty(Auth::user()->deptociudad) ? 'NO REGISTRA': Auth::user()->deptociudad;}}" readonly>
                                         </div>
 
                                         <div class="form-group">
@@ -206,15 +206,15 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="cargoempresa">Cargo que ocupa en la empresa<span style="color:red">*</span></label>
+                                            <label for="cargoempresa">Cargo que ocupa en la empresa</label>
                                             <i class="fas fa-hard-hat"></i>
-                                            <input  class="read-only" id="cargoempresa" name="cargoempresa" type="text" placeholder="Nombre completo" value="{{Auth::user()->cargo}}" readonly>
+                                            <input  class="read-only" id="cargoempresa" name="cargoempresa" type="text" placeholder="Nombre cargo" value="{{empty(Auth::user()->cargo) ? 'NO REGISTRA' : Auth::user()->cargo;}}" readonly>
                                         </div>         
                                         <div class="form-group">
                                             <label for="tipocargo">Tipo del cargo<span style="color:red">*</span></label>
                                             <i class="fas fa-briefcase"></i>                                           
                                             <select id="tipocargo" name="tipocargo" class="editable">
-                                                <option value="" disabled selected>Seleccione una opción lo mas parecida<span style="color:red">*</span></option>
+                                                <option value="" disabled selected>Seleccione una opción lo mas parecida</option>
                                                 <option value="Jefatura" {{ old('tipocargo') == 'Jefatura' ? 'selected' : '' }}>Jefatura: tiene personal a cargo</option>
                                                 <option value="Profesional, Analista, Técnico, Tecnólogo" {{ old('tipocargo') == 'Profesional, Analista, Técnico, Tecnólogo' ? 'selected' : '' }}>Profesional, Analista, Técnico, Tecnólogo</option>
                                                 <option value="Auxiliar, Asistente Administrativo, Asistente técnico" {{ old('tipocargo') == 'Auxiliar, Asistente Administrativo, Asistente técnico' ? 'selected' : '' }}>Auxiliar, Asistente Administrativo, Asistente técnico</option>
@@ -238,9 +238,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="nombredepto">Area de trabajo<span style="color:red">*</span></label>
+                                            <label for="nombredepto">Area de trabajo</label>
                                             <i class="fas fa-network-wired"></i>
-                                            <input  class="read-only" id="nombredepto" name="nombredepto" type="text" placeholder="Area de trabajo" value="{{Auth::user()->areatrabajo}}" readonly>
+                                            <input  class="read-only" id="nombredepto" name="nombredepto" type="text" placeholder="Area de trabajo" value="{{empty(Auth::user()->areatrabajo) ? 'NO REGISTRA': Auth::user()->areatrabajo;}}" readonly>
                                         </div>
 
                                         <div class="form-group">
