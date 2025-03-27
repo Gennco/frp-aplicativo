@@ -38,9 +38,9 @@ class UtilitariosInforme
 
     public function calcularRiesgoYPuntajeEstres($sumas, $claveSuma, $sumaTotal, $divisorPromedio, $multiplicadorSuma,$divisorTransformado, $rangosRiesgo) {
         if($sumas != null && $claveSuma != null){
-            $valorSuma = $sumas[$claveSuma] ?? null;
+            $valorSuma = $sumas[$claveSuma];
         }else if($sumaTotal != null){
-            $valorSuma = $sumaTotal ?? null;
+            $valorSuma = $sumaTotal;
         }
        
         $promedio = $valorSuma ?($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;
