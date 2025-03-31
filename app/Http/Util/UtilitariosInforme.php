@@ -41,6 +41,8 @@ class UtilitariosInforme
             $valorSuma = $sumas[$claveSuma];
         }else if($sumaTotal != null){
             $valorSuma = $sumaTotal;
+        }else{
+            $valorSuma = 0;
         }
        
         $promedio = $valorSuma ?($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;

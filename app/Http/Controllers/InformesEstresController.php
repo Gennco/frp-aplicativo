@@ -48,8 +48,11 @@ class InformesEstresController extends Controller
 
         $sintomasPsicoemocionales = Util::calcularRiesgoYPuntajeEstres($sumas,'suma4',null,9,1,$divisorTransformado,$rango);
 
-        $sumasRiesgos = ($sumas['suma1'] ?? 0) + ($sumas['suma2'] ?? 0) + ($sumas['suma3' ?? 0]) + ($sumas['suma4'] ?? 0);
-
+        $sumasRiesgos = ($sumas['suma1'] ?? 0) + 
+        ($sumas['suma2'] ?? 0) + 
+        ($sumas['suma3'] ?? 0) + 
+        ($sumas['suma4'] ?? 0);
+        
         $totalSintomasEstres = Util::calcularRiesgoYPuntajeEstres(null,null,$sumasRiesgos,4,1,$divisorTransformado,$rango);
         
         $data = [
