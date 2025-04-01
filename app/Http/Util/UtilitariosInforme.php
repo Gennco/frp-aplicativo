@@ -8,7 +8,7 @@ class UtilitariosInforme
 {
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
        
-        $valorSuma = empty($sumas) ?  null : $sumas[$claveSuma] ;
+        $valorSuma = $sumas ?  $sumas[$claveSuma] : null;
         $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
         $total = $promedio ? $promedio * 100 : null;
         $transformado = self::transformarNumero($total);
