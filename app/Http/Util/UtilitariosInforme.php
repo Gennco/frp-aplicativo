@@ -9,12 +9,17 @@ class UtilitariosInforme
     public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
        
         $valorSuma = $sumas ?  $sumas[$claveSuma] : null;
-        $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
-        $total = $promedio ? $promedio * 100 : null;
-        $transformado = self::transformarNumero($total);
-        $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
-        $puntaje = $transformado ?? 0;
-    
+        if(!isset($sumas[$claveSuma])){
+            $riesgo = "NO APLICA";
+            $puntaje= 0;
+        }else{
+            $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
+            $total = $promedio ? $promedio * 100 : null;        
+            $transformado = self::transformarNumero($total);
+            $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
+            $puntaje = $transformado ?? 0;
+        }  
+
         return (object) [
             'riesgo' => $riesgo,
             'puntaje' => $puntaje
@@ -24,12 +29,16 @@ class UtilitariosInforme
 
     public function calcularRiesgoYPuntajeDominios($sumaDomnio, $divisorPromedio, $rangosRiesgo) {
         $valorSuma = $sumaDomnio ?? null;
-        $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
-        $total = $promedio ? $promedio * 100 : null;
-        $transformado = self::transformarNumero($total);
-        $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
-        $puntaje = $transformado ?? 0;
-    
+        if(is_null($valorSuma)){
+            $riesgo = "NO APLICA";
+            $puntaje = 0;
+        }else{
+            $promedio = $valorSuma ? $valorSuma / $divisorPromedio : null;
+            $total = $promedio ? $promedio * 100 : null;
+            $transformado = self::transformarNumero($total);
+            $riesgo = self::determinarRiesgo($transformado, $rangosRiesgo);
+            $puntaje = $transformado ?? 0;
+        }    
         return (object) [
             'riesgo' => $riesgo,
             'puntaje' => $puntaje
@@ -44,13 +53,12 @@ class UtilitariosInforme
         }else{
             $valorSuma = 0;
         }
-       
-        $promedio = $valorSuma ?($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;
+
+        $promedio = $valorSuma ? ($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;
         $total = $promedio ? ($promedio/$divisorTransformado) * 100 : null;
         $transformado = self::transformarNumero($total);
         $riesgo = self::determinarRiesgo($transformado,$rangosRiesgo);
         $puntaje = $transformado ?? 0;
-    
         return (object) [
             'riesgo' => $riesgo,
             'puntaje' => $puntaje
@@ -58,24 +66,22 @@ class UtilitariosInforme
     }
 
     public function transformarNumero($resultado){
-        if($resultado != null){
+        if(!empty($resultado)){
             return number_format($resultado,1,".",",");
-        }else{
+        }
+        else{
             return null;
         } 
     }
 
     public function determinarRiesgo($puntaje, $limitesRiesgo){
-        if($puntaje == null){
-            return "NO APLICA";
-        }
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
        
         switch (true) {
-            case ($puntaje == 0.0) :
+            case ($puntaje === 0.0) :
                 $riesgo = 'SIN RIESGO';
                 break;
-            case ($puntaje == 0) :
+            case ($puntaje === 0) :
                 $riesgo = 'SIN RIESGO';
                 break;    
             case ($puntaje <= $limiteSR):
@@ -93,6 +99,8 @@ class UtilitariosInforme
             case ($puntaje <= $limiteRMA):
                 $riesgo = 'RIESGO MUY ALTO';
                 break;
+            default: 
+                $riesgo = "NO APLICA";
         }
       
         return $riesgo;
