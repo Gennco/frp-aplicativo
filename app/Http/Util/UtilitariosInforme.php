@@ -29,7 +29,7 @@ class UtilitariosInforme
 
     public function calcularRiesgoYPuntajeDominios($sumaDomnio, $divisorPromedio, $rangosRiesgo) {
         $valorSuma = $sumaDomnio ?? null;
-        if(is_null($valorSuma == 0)){
+        if(is_null($valorSuma)){
             $riesgo = "NO APLICA";
             $puntaje = 0;
         }else{
