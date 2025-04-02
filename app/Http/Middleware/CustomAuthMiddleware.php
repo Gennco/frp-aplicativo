@@ -24,12 +24,11 @@ class CustomAuthMiddleware
             $empleado = Empleado::where('registro',$registro)->first();
             if ($empleado) { 
                 Auth::guard('empleados')->setUser($empleado); 
-                \Log::info('Usuario autenticado en el middleware: ' . $empleado->cedula); } 
+               } 
             } 
             if (Auth::guard('empleados')->check()) { 
                 return $next($request); 
             }     
-            \Log::info('Usuario no es autenticado en el middleware, redireccionando'); 
             return redirect()->route('empleado.login');
     } 
 }    
