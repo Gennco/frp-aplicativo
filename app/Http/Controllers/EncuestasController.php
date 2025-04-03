@@ -12,6 +12,7 @@ use App\Models\Seccion;
 use App\Models\Opcion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\FichadatosValidacion;
@@ -137,26 +138,46 @@ class EncuestasController extends Controller
     }
 
     public function confirmaFichadatos(FichadatosValidacion $request){
-         $validatedData = $request->validated();
-       
-         $additionalData = $request->only(['empresas', 'sede', 'nombre','cedula','lugartrabajodpto','lugartrabajocity', 'nombredepto', 'registro','periodo','cargoempresa','tablacontestada']);
-         $edad = Carbon::now()->format('Y') - $validatedData['anonaci'];
-         $additionalData['edad']   = $edad;
-       
-         $data = array_merge($validatedData, $additionalData);
-       
-        try {
+        $validatedData = $request->validated();
+    
+        $additionalData = $request->only(['empresas', 'sede', 'nombre','cedula','lugartrabajodpto','lugartrabajocity', 'nombredepto', 'registro','periodo','cargoempresa','tablacontestada']);
+        $edad = Carbon::now()->format('Y') - $validatedData['anonaci'];
+        $additionalData['edad']   = $edad;
+    
+        $data = array_merge($validatedData, $additionalData);
+        $data['ocupacion'] = mb_convert_encoding($data['ocupacion'], 'UTF-8', 'UTF-8');
+        
+        $maxAttempts = 5;
+        $attempts = 0;
+
+        while ($attempts < $maxAttempts) {
+            try {
+                DB::transaction(function () use ($data) {
+                    FichaDato::updateOrCreate(
+                        ['registro' => $data['registro']],
+                        $data 
+                    );
+                }, 5);
+                
+                return redirect()->route('encuesta.preguntas', [
+                    strtolower(Auth::user()->nivelSeguridad), 
+                    $data['tablacontestada']
+                ])->with('success', '¡Sus datos fueron registrados!');
             
-            $modelInfo = Fichadato::where('registro',$request->registro)->first();
-            !empty($modelInfo) ?  FichaDato::where('registro',$data['registro'])->update($data) : FichaDato::create($data);
-
-            return redirect()->route('encuesta.preguntas', [strtolower(Auth::user()->nivelSeguridad), $data['tablacontestada']])->with('success', '¡Sus datos fueron registrados!');
-        } catch (Exception $exception) {
-            Log::error('Error registrando ficha datos: ', $exception);
-
-            return redirect()->route('encuesta.fichadatos')->with('error', 'Ha ocurrido un error al intentar guardar sus datos');
-        }
-
+            } catch (\Illuminate\Database\QueryException $exception) {
+                if ($exception->getCode() == 1213) { // Deadlock error
+                    $attempts++;
+                    Log::warning("Deadlock detected on attempt #$attempts. Retrying...");
+                    sleep(1);
+                } else {
+                    Log::error('Error registrando ficha datos: ' . $exception->getMessage());
+                    return redirect()->route('encuesta.fichadatos')->with('error', 'Ha ocurrido un error al intentar guardar sus datos');
+                }
+            } catch (Exception $exception) {
+                Log::error('Error registrando ficha datos: ' . $exception->getMessage());
+                return redirect()->route('encuesta.fichadatos')->with('error', 'Ha ocurrido un error al intentar guardar sus datos');
+            }
+        }    
     }
 
     public function mostrarPreguntas(Request $request){    
