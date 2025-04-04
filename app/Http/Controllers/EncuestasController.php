@@ -138,15 +138,15 @@ class EncuestasController extends Controller
     }
 
     public function confirmaFichadatos(FichadatosValidacion $request){
-        $validatedData = $request->validated();
-    
-        $additionalData = $request->only(['empresas', 'sede', 'nombre','cedula','lugartrabajodpto','lugartrabajocity', 'nombredepto', 'registro','periodo','cargoempresa','tablacontestada']);
-        $edad = Carbon::now()->format('Y') - $validatedData['anonaci'];
-        $additionalData['edad']   = $edad;
-    
-        $data = array_merge($validatedData, $additionalData);
+         $validatedData = $request->validated();
+       
+         $additionalData = $request->only(['empresas', 'sede', 'nombre','cedula','lugartrabajodpto','lugartrabajocity', 'nombredepto', 'registro','periodo','cargoempresa','tablacontestada']);
+         $edad = Carbon::now()->format('Y') - $validatedData['anonaci'];
+         $additionalData['edad']   = $edad;
+       
+         $data = array_merge($validatedData, $additionalData);
         $data['ocupacion'] = mb_convert_encoding($data['ocupacion'], 'UTF-8', 'UTF-8');
-        
+       
         $maxAttempts = 5;
         $attempts = 0;
 
@@ -556,7 +556,7 @@ class EncuestasController extends Controller
                 break; 
             
             case config('constants.SECCION_ESTRES'):
-                InformesEstresController::generarInformeEstres($fichaDato); 
+                InformesEstresController::generarInformeEstres(Auth::user(),$fichaDato); 
                 break;
                 
             case config('constants.SECCION_AFRONTAMIENTO_III'):
