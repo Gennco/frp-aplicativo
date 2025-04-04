@@ -40,10 +40,9 @@ class InformeEstres extends Model
 
     public function getTable()
     {
-        if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
+        if ($user && $user->nivelSeguridad == config('constants.TIPO_B')) {
             return 'grupalestres1a';
-        }
-
+        } 
         return $this->table;
     }
 }
