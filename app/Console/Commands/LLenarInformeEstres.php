@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\InformesEstresController;
+USE App\Models\Empleado;
 
 class LLenarInformeEstres extends Command
 {
