@@ -8,7 +8,7 @@ class InformeEstres extends Model
 {
     use HasFactory;
 
-    protected $table = 'grupalestres1a';
+    protected $table = 'grupalestres1';
 
     protected $primaryKey = 'registro';
 
@@ -38,11 +38,12 @@ class InformeEstres extends Model
         'periodo'
     ];
 
-    /*public function getTable()
+    public function getTable()
     {
-        if ($user && $user->nivelSeguridad == config('constants.TIPO_B')) {
+        if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
             return 'grupalestres1a';
-        } 
+        }
+
         return $this->table;
-    }*/
+    }
 }
