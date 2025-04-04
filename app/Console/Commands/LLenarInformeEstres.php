@@ -37,12 +37,14 @@ class LLenarInformeEstres extends Command
             if(empty($fichadato)){
                 continue;
             }else{
-                $fakeUser = new Empleado();
-                $fakeUser = $empleado;
-                Auth::setUser($fakeUser);
+                Auth::setUser($empleado);
                 InformesEstresController::generarInformeEstres(Auth::user(),$fichadato);
             }
         }
         $this->info('Informes estres actualizados correctamente para los registros: ' . implode(', ', $registros));
+    }
+
+    function setFakeUser($empleado){
+
     }
 }
