@@ -38,11 +38,11 @@ class InformeEstres extends Model
         'periodo'
     ];
 
-    public function getTable()
+    /*public function getTable()
     {
         if ($user && $user->nivelSeguridad == config('constants.TIPO_B')) {
             return 'grupalestres1a';
         } 
         return $this->table;
-    }
+    }*/
 }
