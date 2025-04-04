@@ -8,7 +8,7 @@ class InformeEstres extends Model
 {
     use HasFactory;
 
-    protected $table = 'grupalestres1';
+    protected $table = 'grupalestres1a';
 
     protected $primaryKey = 'registro';
 
