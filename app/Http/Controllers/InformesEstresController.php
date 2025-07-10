@@ -82,5 +82,6 @@ class InformesEstresController extends Controller
             Log::error('Error registrando informe extralaboral: ', $exception);
             return redirect()->back()->with('error', 'Ha ocurrido un error al intentar guardar sus datos');
         }
+        
     }   
 }

@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+.htaccess
+error_log
+index.php
+public/error_log

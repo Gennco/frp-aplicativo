@@ -7,11 +7,10 @@ use App\Models\ExtralaboralB;
 use App\Models\InformeExtralaboral;
 use App\Http\Util\UtilitariosInforme as Util;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class InformesExtralaboralesController extends Controller
 {
-    public function generarInformeExtralaboral($fichadatos){
+    public function generarInformeExtralaboral($user, $fichadatos){
 
         $sumaTiempoFueraTrabajo = ExtralaboralB::where('registro', $fichadatos->registro)
         ->selectRaw('ext14 + ext15 + ext16 + ext17 as suma')
@@ -50,26 +49,26 @@ class InformesExtralaboralesController extends Controller
 
         $tiempoFueraTrabajo = Util::calcularRiesgoYPuntajeDominios($sumaTiempoFueraTrabajo,16,[6.3,25,37.5,50,100]);
 
-        $rangoRF = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [0.9,8.3,16.7,25,100] : [0.9,8.3,25,33.3,100];
+        $rangoRF = $user->nivelSeguridad == config('constants.TIPO_A') ? [0.9,8.3,16.7,25,100] : [0.9,8.3,25,33.3,100];
         $relacionesFamiliares =  Util::calcularRiesgoYPuntajeDominios($sumaRelacionesFamiliares,12,$rangoRF);
         
-        $rangoRC = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [0.9,10,20,30,100] : [5,15,25,35,100];
+        $rangoRC = $user->nivelSeguridad == config('constants.TIPO_A') ? [0.9,10,20,30,100] : [5,15,25,35,100];
         $relacionesComunicacion = Util::calcularRiesgoYPuntajeDominios($sumaRelacionesComunicaciones,20,$rangoRC);
 
-        $rangoSE = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [8.3,25,33.3,50,100] : [16.7,25,41.7,50,100];
+        $rangoSE = $user->nivelSeguridad == config('constants.TIPO_A') ? [8.3,25,33.3,50,100] : [16.7,25,41.7,50,100];
         $situacionEconomica =  Util::calcularRiesgoYPuntajeDominios($sumaSituacionEconomica,12,$rangoSE);
 
-        $rangoCV = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [5.6,11.1,13.9,22.2,100] : [5.6,11.1,16.7,27.8,100];
+        $rangoCV = $user->nivelSeguridad == config('constants.TIPO_A') ? [5.6,11.1,13.9,22.2,100] : [5.6,11.1,16.7,27.8,100];
         $condicionesVivienda =  Util::calcularRiesgoYPuntajeDominios($sumaCondicionesVivienda,36,$rangoCV);
 
-        $rangoIE = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [8.3,16.7,25,41.7,100] : [0.9,16.7,25,41.7,100];
+        $rangoIE = $user->nivelSeguridad == config('constants.TIPO_A') ? [8.3,16.7,25,41.7,100] : [0.9,16.7,25,41.7,100];
         $influenciaEntornoExtralaboral =  Util::calcularRiesgoYPuntajeDominios($sumaInfluenciaExtralaboral,12,$rangoIE);
 
         $desplazamientoVivienda = Util::calcularRiesgoYPuntajeDominios($sumaDesplazamientoVivienda,16,[0.9,12.5,25,43.8,100]);
 
         $sumaTotalExtralaboral = ($sumaTiempoFueraTrabajo ?? 0 ) + ($sumaRelacionesFamiliares ?? 0) + ($sumaRelacionesComunicaciones ?? 0 ) + ($sumaSituacionEconomica ?? 0)
         + ($sumaCondicionesVivienda ?? 0 ) + ($sumaInfluenciaExtralaboral ?? 0) + ($sumaDesplazamientoVivienda ?? 0);
-        $rangoTotal = Auth::user()->nivelSeguridad == config('constants.TIPO_A') ? [11.3,16.9,22.6,29,100] : [12.9,17.7,24.2,32.3,100];
+        $rangoTotal = $user->nivelSeguridad == config('constants.TIPO_A') ? [11.3,16.9,22.6,29,100] : [12.9,17.7,24.2,32.3,100];
         $totalExtraLaboral = Util::calcularRiesgoYPuntajeDominios($sumaTotalExtralaboral,124, $rangoTotal);
         
         $data=[

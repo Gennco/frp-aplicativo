@@ -552,7 +552,7 @@ class EncuestasController extends Controller
                 break;
 
             case config('constants.SECCION_CONDICIONES_EXTRA'):
-                InformesExtralaboralesController::generarInformeExtralaboral($fichaDato); 
+                InformesExtralaboralesController::generarInformeExtralaboral(Auth::user(),$fichaDato); 
                 break; 
             
             case config('constants.SECCION_ESTRES'):

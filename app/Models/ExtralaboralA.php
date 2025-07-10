@@ -9,7 +9,7 @@ class ExtralaboralA extends Model
 {
     use HasFactory;
 
-    protected $table = 'ext1';
+    protected $table = 'ext1a';
 
     protected $primaryKey = 'registro';
 
@@ -40,7 +40,7 @@ class ExtralaboralA extends Model
         'periodo'
     ];  
 
-
+    /*
     public function getTable()
     {
         if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
@@ -49,4 +49,5 @@ class ExtralaboralA extends Model
 
         return $this->table;
     }
+    */
 }

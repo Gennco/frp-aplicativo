@@ -37,7 +37,7 @@ class InformeEstres extends Model
         'estres_rta5',
         'periodo'
     ];
-
+    
     public function getTable()
     {
         if (auth()->user()->nivelSeguridad == config('constants.TIPO_B')) {
@@ -46,4 +46,5 @@ class InformeEstres extends Model
 
         return $this->table;
     }
+    
 }
