@@ -295,7 +295,7 @@ class EncuestasController extends Controller
         return response()->json($municipios);
     }
 
-    public function obtenerValorPreguntas($seccion){
+    public static function obtenerValorPreguntas($seccion){
     
         $preguntas = self::obtenerQueryPreguntas($seccion->tipo, $seccion->id, $seccion->modeloPregunta,$seccion->route);
         $preguntas->each(function ($pregunta) {
@@ -309,7 +309,7 @@ class EncuestasController extends Controller
         return $preguntas;
     }
 
-    public function esSeccionConPreguntas ($ruta){
+    public static function esSeccionConPreguntas ($ruta){
         switch($ruta){
             case config('constants.SECCION_CONFIRMA_JEFE'):
                 return false;
@@ -326,7 +326,7 @@ class EncuestasController extends Controller
         }        
     }
 
-    public function obtenerPrefijoPreguntas ($ruta){
+    public static function obtenerPrefijoPreguntas ($ruta){
         switch($ruta){
             case config('constants.SECCION_CONDICIONES_VIVIENDA'):
                 return 'ext';
@@ -343,7 +343,7 @@ class EncuestasController extends Controller
     }
 
 
-    public function obtenerSufijoPreguntas ($tipo , $ruta){
+    public static function obtenerSufijoPreguntas ($tipo , $ruta){
         if($tipo == config('constants.TIPO_B') && $ruta == config('constants.SECCION_ESTRES')){
             return "a";
         }
