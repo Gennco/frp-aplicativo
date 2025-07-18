@@ -211,7 +211,7 @@ class InformesIntralaboralesController extends Controller
         }
     }
 
-    public function generarInformeIntraB($fichadatos){
+    public static function generarInformeIntraB($fichadatos){
         $sumas = DB::table('10b')
         ->join('12b', '10b.registro', '=', '12b.registro')
         ->join('14b', '10b.registro', '=', '14b.registro')
