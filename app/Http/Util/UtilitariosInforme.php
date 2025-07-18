@@ -56,7 +56,7 @@ class UtilitariosInforme
 
         $promedio = $valorSuma ? ($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;
         $total = $promedio ? ($promedio/$divisorTransformado) * 100 : null;
-        $transformado = self::tsransformarNumero($total);
+        $transformado = self::transformarNumero($total);
         $riesgo = self::determinarRiesgo($transformado,$rangosRiesgo);
         $puntaje = $transformado ?? 0;
         return (object) [
