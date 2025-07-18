@@ -6,7 +6,7 @@ use App\Http\Util\UtilitariosInforme as Util;
 use Illuminate\Support\Facades\DB;
 
 class InformesAfrontamientoController extends Controller{
-    public function generarInformeAfrontamiento($fichadatos){
+    public static function generarInformeAfrontamiento($fichadatos){
         $sumas = DB::table('afrontamientoa as a')
         ->join('afrontamientob as b', 'a.registro', '=', 'b.registro')
         ->join('afrontamientoc as c', 'a.registro', '=', 'c.registro')

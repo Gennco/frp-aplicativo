@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 class UtilitariosInforme
 {
-    public function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
+    public static function calcularRiesgoYPuntajeDimensiones($sumas, $claveSuma, $divisorPromedio, $rangosRiesgo) {
        
         $valorSuma = $sumas ?  $sumas[$claveSuma] : null;
         if(!isset($sumas[$claveSuma])){
@@ -27,7 +27,7 @@ class UtilitariosInforme
     }
 
 
-    public function calcularRiesgoYPuntajeDominios($sumaDomnio, $divisorPromedio, $rangosRiesgo) {
+    public static function calcularRiesgoYPuntajeDominios($sumaDomnio, $divisorPromedio, $rangosRiesgo) {
         $valorSuma = $sumaDomnio ?? null;
         if(is_null($valorSuma)){
             $riesgo = "NO APLICA";
@@ -45,7 +45,7 @@ class UtilitariosInforme
         ];
     }
 
-    public function calcularRiesgoYPuntajeEstres($sumas, $claveSuma, $sumaTotal, $divisorPromedio, $multiplicadorSuma,$divisorTransformado, $rangosRiesgo) {
+    public static function calcularRiesgoYPuntajeEstres($sumas, $claveSuma, $sumaTotal, $divisorPromedio, $multiplicadorSuma,$divisorTransformado, $rangosRiesgo) {
         if($sumas != null && $claveSuma != null){
             $valorSuma = $sumas[$claveSuma];
         }else if($sumaTotal != null){
@@ -56,7 +56,7 @@ class UtilitariosInforme
 
         $promedio = $valorSuma ? ($valorSuma / $divisorPromedio) * $multiplicadorSuma : null;
         $total = $promedio ? ($promedio/$divisorTransformado) * 100 : null;
-        $transformado = self::transformarNumero($total);
+        $transformado = self::tsransformarNumero($total);
         $riesgo = self::determinarRiesgo($transformado,$rangosRiesgo);
         $puntaje = $transformado ?? 0;
         return (object) [
