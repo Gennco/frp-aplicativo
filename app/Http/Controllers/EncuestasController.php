@@ -465,7 +465,7 @@ class EncuestasController extends Controller
         }
     }
 
-    public function obtenerQueryPreguntas($tipo, $seccion_id, $tipoModelo, $ruta){
+    public static function obtenerQueryPreguntas($tipo, $seccion_id, $tipoModelo, $ruta){
         
         if($tipo == config('constants.TIPO_B')){
             switch ($ruta) {

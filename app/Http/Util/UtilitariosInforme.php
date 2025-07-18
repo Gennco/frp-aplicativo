@@ -65,7 +65,7 @@ class UtilitariosInforme
         ];
     }
 
-    public function transformarNumero($resultado){
+    public static function transformarNumero($resultado){
         if(!empty($resultado)){
             return number_format($resultado,1,".",",");
         }
@@ -74,7 +74,7 @@ class UtilitariosInforme
         } 
     }
 
-    public function determinarRiesgo($puntaje, $limitesRiesgo){
+    public static function determinarRiesgo($puntaje, $limitesRiesgo){
         list($limiteSR, $limiteRB, $limiteRM, $limiteRA, $limiteRMA) = $limitesRiesgo;
        
         switch (true) {
