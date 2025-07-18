@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class InformesEstresController extends Controller
 
 {
-    public function generarInformeEstres($user, $fichadatos){
+    public static function generarInformeEstres($user, $fichadatos){
         $tabla = $user->nivelSeguridad == config('constants.TIPO_B') ? 'estres1a' : 'estres1';
         $criterios_suma1 = $user->nivelSeguridad == config('constants.TIPO_B') ? 'estres1a + estres2a + estres3a + estres4a + estres5a + estres6a + estres7a + estres8a' : 'estres1 + estres2 + estres3 + estres4 + estres5 + estres6 + estres7 + estres8';
         $criterios_suma2 = $user->nivelSeguridad == config('constants.TIPO_B') ? 'estres9a + estres10a + estres11a + estres12a' : 'estres9 + estres10 + estres11 + estres12';

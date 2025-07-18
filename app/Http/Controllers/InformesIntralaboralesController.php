@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class InformesIntralaboralesController extends Controller
 {
-    public function generarInformeIntraA($fichadatos){
+    public static function generarInformeIntraA($fichadatos){
         $sumas = DB::table('a10')
         ->join('a11', 'a10.registro', '=', 'a11.registro')
         ->join('a12', 'a10.registro', '=', 'a12.registro')

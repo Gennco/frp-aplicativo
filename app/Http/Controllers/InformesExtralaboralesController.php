@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class InformesExtralaboralesController extends Controller
 {
-    public function generarInformeExtralaboral($user, $fichadatos){
+    public static function generarInformeExtralaboral($user, $fichadatos){
 
         $sumaTiempoFueraTrabajo = ExtralaboralB::where('registro', $fichadatos->registro)
         ->selectRaw('ext14 + ext15 + ext16 + ext17 as suma')
