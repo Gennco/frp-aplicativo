@@ -244,7 +244,7 @@ class EncuestasController extends Controller
 
                 $fichaDato->update(['tablacontestada' => $proximaSeccionId]);
 
-                if($proximaSeccionId == config('constants.SECCION_FIN_ENCUESTA')){
+                if($proximaSeccionId === config('constants.SECCION_FIN_ENCUESTA')){
                     $empleado = Empleado::where('registro',Auth::user()->registro);
                     $empleado->update(['habilitado'=>config('constants.USUARIO_COMPLETO'),
                         'llave'=>config('constants.USUARIO_LLAVE'),
