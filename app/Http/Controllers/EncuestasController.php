@@ -110,6 +110,7 @@ class EncuestasController extends Controller
             }else{
                 $empleado->update([
                     'consentimiento' => $request->input('consentimiento'),
+                    'fichadatos'=>config('constants.USUARIO_NIEGA'),
                     'habilitado' => config('constants.USUARIO_COMPLETO'),
                     'tipoencuesta' => 'noconsentimiento',
                     'llave' => config('constants.USUARIO_LLAVE')
