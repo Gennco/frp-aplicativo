@@ -52,7 +52,9 @@ class EmpleadoAuthController extends Controller
             'cedula' => $credentials['cedula'],
             'habilitado' => 'habilitado',
             'llave' => 'nada'
-        ])->first();
+        ])
+        ->orderBy('registro', 'desc')
+        ->first();
 
         Log::info('Empleado encontrado: ', ['empleado' => $empleado]);
             
