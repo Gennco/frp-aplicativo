@@ -138,6 +138,7 @@ class EncuestasController extends Controller
         return view('encuesta.fichadatos', compact('departamentos', 'anios'));
     }
 
+
     public function confirmaFichadatos(FichadatosValidacion $request){
          $validatedData = $request->validated();
        
