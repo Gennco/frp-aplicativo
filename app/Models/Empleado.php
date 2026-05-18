@@ -40,6 +40,8 @@ class Empleado extends Authenticatable
         'logo_empresa',
         'habilitado',
         'consentimiento',
+        'firma',
+        'fecha_firma',
         'fichadatos',
         'terminos',
         'adicional',

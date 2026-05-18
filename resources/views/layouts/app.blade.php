@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/material.css') }}" rel="stylesheet">
+    @stack('styles')
 </head>
 <body data-route="{{ request()->path() }}" class="content-box">
     <div id="app">

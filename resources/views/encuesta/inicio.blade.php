@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center centered-view section-center">
+<div class="row justify-content-center align-items-center" style="min-height:calc(100vh - 150px); margin:0; padding-top:24px; padding-bottom:50px;">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header center-paragraph">Encuesta de factores de Riesgo Psicosocial</div>

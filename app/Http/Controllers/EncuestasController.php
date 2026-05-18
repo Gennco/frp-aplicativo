@@ -103,9 +103,11 @@ class EncuestasController extends Controller
             $empleado =  Empleado::where('registro',$user_registro);
             if($request->consentimiento == config('constants.USUARIO_CONFIRMA')){
                 $empleado->update([
-                            'consentimiento' => $request->input('consentimiento')
-                        ]);
-                         
+                    'consentimiento' => $request->input('consentimiento'),
+                    'firma'          => $request->input('firma'),
+                    'fecha_firma'    => $request->input('fecha_firma'),
+                ]);
+
                 return redirect()->route('encuesta.fichadatos');            
             }else{
                 $empleado->update([
