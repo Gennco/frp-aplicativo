@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center centered-view">
+<div class="row justify-content-center" style="margin:0; padding-top:20px;">
 <div class="col-md-8">
-  <div class="card"> 
+  <div class="card" style="margin-bottom:60px;">
       <div class="card-header center-paragraph-bold">Advertencia</div>
       <div class="card-body">
         <form  method="POST" action="{{route('encuesta.terminos.aceptar')}}" name="form-advise" id="login-advice" >
