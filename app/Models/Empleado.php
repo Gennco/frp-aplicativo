@@ -27,6 +27,7 @@ class Empleado extends Authenticatable
         'nombre',
         'cargo',
         'cedula',
+        'ciudad_expedicion',
         'contrasena',
         'correo',
         'delaciudad',

@@ -67,8 +67,25 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('touchend', function () { drawing = false; });
     canvas.addEventListener('_resetFirmaSigned', function () { firmaSigned = false; });
 
-    document.getElementById('formAceptar').addEventListener('submit', function () {
+    const ciudadInput = document.getElementById('ciudadExpedicionInput');
+    if (ciudadInput) {
+        ciudadInput.addEventListener('input', function () {
+            this.style.borderBottom = '1px solid #495057';
+        });
+    }
+
+    document.getElementById('formAceptar').addEventListener('submit', function (e) {
+        const ciudadInput = document.getElementById('ciudadExpedicionInput');
+        if (!ciudadInput || ciudadInput.value.trim() === '') {
+            e.preventDefault();
+            ciudadInput.style.borderBottom = '2px solid #dc3545';
+            ciudadInput.placeholder = 'Campo requerido';
+            ciudadInput.focus();
+            return;
+        }
+        ciudadInput.style.borderBottom = '1px solid #495057';
         document.getElementById('firmaData').value = canvas.toDataURL('image/png');
+        document.getElementById('ciudadExpedicionData').value = ciudadInput.value.trim();
     });
 });
 

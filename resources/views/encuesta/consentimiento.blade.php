@@ -24,7 +24,7 @@
                         <em>(Programa prevención de factores de riesgo psicosocial)</em>
                     </p>
 
-                    <p>Yo <strong>{{ Auth::user()->nombre }}</strong> identificado con C.C. N° <strong>{{ Auth::user()->cedula }}</strong> de <strong>{{ Auth::user()->delaciudad }}</strong>, en mi condición de trabajador de la empresa <strong>{{ Auth::user()->lugartrabajo }}</strong>, manifiesto que me han explicado y he comprendido satisfactoriamente la naturaleza y propósito del Programa de Prevención en Riesgo Psicolaboral.</p>
+                    <p>Yo <strong>{{ Auth::user()->nombre }}</strong> identificado con C.C. N° <strong>{{ Auth::user()->cedula }}</strong> de <input type="text" id="ciudadExpedicionInput" value="{{ Auth::user()->ciudad_expedicion }}" placeholder="Ciudad" style="display:inline; width:auto; min-width:120px; border:none; border-bottom:1px solid #495057; background:transparent; font-size:inherit; font-family:inherit; color:#212529; padding:0 2px; outline:none;">, en mi condición de trabajador de la empresa <strong>{{ Auth::user()->lugartrabajo }}</strong>, manifiesto que me han explicado y he comprendido satisfactoriamente la naturaleza y propósito del Programa de Prevención en Riesgo Psicolaboral.</p>
 
                     <p>En consecuencia, doy mi consentimiento para que me practiquen las pruebas psicotécnicas, instrumentos de medición de los factores de riesgo psicosocial (Intralaborales, extralaborales e individuales) encuestas de información sociodemográfica, entrevistas y procedimientos que se encuentran enmarcados en el protocolo del Programa de Prevención en riesgos psicosociales que contribuyan a generar diagnósticos confiables y que hagan parte del ambiente laboral.</p>
 
@@ -79,6 +79,7 @@
                                     <input type="hidden" name="consentimiento" value="{{config('constants.USUARIO_CONFIRMA')}}">
                                     <input type="hidden" name="firma" id="firmaData">
                                     <input type="hidden" name="fecha_firma" id="fechaFirmaData">
+                                    <input type="hidden" name="ciudad_expedicion" id="ciudadExpedicionData">
                                     <button type="submit" class="btn btn-circle green"
                                         style="width:100%; height:auto; padding:8px 20px; border-radius:20px; font-size:0.88em;">
                                         Acepto consentimiento.
