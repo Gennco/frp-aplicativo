@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function stampFecha() {
         if (firmaSigned) return;
         firmaSigned = true;
-        const iso = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        // UTC-5 (America/Bogota — no daylight saving)
+        const iso = new Date().toLocaleString('sv-SE', { timeZone: 'America/Bogota' });
         document.getElementById('fechaFirmaData').value = iso;
     }
 
