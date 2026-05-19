@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('formAceptar').addEventListener('submit', function () {
         document.getElementById('firmaData').value = canvas.toDataURL('image/png');
+        const ciudad = document.getElementById('ciudadExpedicionInput');
+        if (ciudad) document.getElementById('ciudadExpedicionData').value = ciudad.value;
     });
 });
 
