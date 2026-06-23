@@ -33,25 +33,19 @@
                                              <input type = "hidden" id="periodo" name="periodo" value="{{Auth::user()->periodo}}">
                                             <input type = "hidden" id="tablacontestada" name="tablacontestada" value="condiciones-ambientales">
                                         </div>
-                                        <div class="form-group checkbox-group">
-                                            <div class="row" col=12>
-                                                <div class="row" col=12>
-                                                    <label for="sexo">Sexo<span style="color:red">*</span></label>
-                                                </div>
-                                                <div class="row" col=6>
-                                                    <label>
-                                                        <input type="radio" id="sexo" name="sexo" value="MASCULINO" {{ old('sexo') == 'MASCULINO' ? 'checked' : '' }}> Masculino
-                                                    </label>
-                                                </div>
-                                                <div class="row" col=6>
-                                                    <label>
-                                                        <input type="radio" id="sexo" name="sexo" value="FEMENINO" {{ old('sexo') == 'FEMENINO' ? 'checked' : '' }}> Femenino
-                                                    </label>
-                                                </div> 
-                                                @error('sexo') 
-                                                    <span class="error-message">{{ $message }}
-                                                @enderror
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="sexo">Sexo<span style="color:red">*</span></label>
+                                            <i class="fas fa-venus-mars"></i>
+                                           <select id="sexo" name="sexo" class="editable">
+                                                <option value="" disabled selected>Seleccione su género</option>
+                                                <option value="MASCULINO" {{ old('sexo') == 'MASCULINO' ? 'selected' : '' }}>Masculino</option>
+                                                <option value="FEMENINO" {{ old('sexo') == 'FEMENINO' ? 'selected' : '' }}>Femenino</option>
+                                                <option value="OTRO" {{ old('sexo') == 'OTRO' ? 'selected' : '' }}>Otro</option>
+                                                <option value="PREFIERO NO DECIRLO" {{ old('sexo') == 'PREFIERO NO DECIRLO' ? 'selected' : '' }}>Prefiero no decirlo</option>
+                                            </select>
+                                            @error('sexo')
+                                                <span class="error-message">{{ $message }}</span>
+                                            @enderror 
                                         </div>
                                         <div class="form-group">
                                             <label for="anonaci">Año de nacimiento <span style="color:red">*</span></label>
