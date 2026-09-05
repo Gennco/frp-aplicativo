@@ -160,8 +160,11 @@ class EncuestasController extends Controller
                 DB::transaction(function () use ($data) {
                     FichaDato::updateOrCreate(
                         ['registro' => $data['registro']],
-                        $data 
+                        $data
                     );
+
+                    Empleado::where('registro', $data['registro'])
+                        ->update(['fichadatos' => config('constants.USUARIO_CONFIRMA')]);
                 }, 5);
                 
                 return redirect()->route('encuesta.preguntas', [
