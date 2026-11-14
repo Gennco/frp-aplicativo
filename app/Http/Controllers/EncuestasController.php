@@ -277,13 +277,9 @@ class EncuestasController extends Controller
         }
 
         $fichaDato = Fichadato::where('registro', Auth::user()->registro)->first();
-        if (
-            !$fichaDato ||
-            strtoupper($request->input('tipo')) !== $tipo ||
-            $fichaDato->tablacontestada !== $rutaActual
-        ) {
+        if (!$fichaDato) {
             return redirect()->back()
-                ->with('error', 'La sección enviada no coincide con el avance actual de la encuesta.');
+                ->with('error', 'No se encontró el avance actual de la encuesta.');
         }
 
         $secciones = $this->obtenerRutasValidas(
@@ -291,6 +287,23 @@ class EncuestasController extends Controller
             Auth::user()->afrontamiento,
             Auth::user()->adicional
         );
+        $rutaGuardada = $fichaDato->tablacontestada;
+        $indiceRutaGuardada = $this->obtenerIndiceAvance($secciones, $rutaGuardada);
+        if ($indiceRutaGuardada === false) {
+            return redirect()->back()
+                ->with('error', 'No se pudo determinar el avance actual de la encuesta.');
+        }
+
+        if (
+            strtoupper($request->input('tipo')) !== $tipo ||
+            $rutaGuardada !== $rutaActual
+        ) {
+            return redirect()->route('encuesta.preguntas', [
+                'tipo' => strtolower($tipo),
+                'seccion' => $rutaGuardada,
+            ]);
+        }
+
         $indiceFinEncuesta = $this->obtenerIndiceAvance(
             $secciones,
             config('constants.SECCION_FIN_ENCUESTA')
