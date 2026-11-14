@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\FichadatosValidacion;
 use App\Http\Requests\PreguntasRequest;
 use App\Http\Controllers\InformesIntralaboralesController;
@@ -37,6 +38,13 @@ class EncuestasController extends Controller
             if($user->consentimiento == config('constants.USUARIO_ESPERA')){
                 return redirect()->route('encuesta.consentimiento');
             }
+
+            if (
+                $user->consentimiento == config('constants.USUARIO_NIEGA') ||
+                $user->tipoencuesta == 'noconsentimiento'
+            ) {
+                return redirect()->route('encuesta.no-consentimiento');
+            }
                 
             if ($user->consentimiento == config('constants.USUARIO_CONFIRMA') && $user->fichadatos == config('constants.USUARIO_ESPERA')){
                 return redirect()->route('encuesta.fichadatos');
@@ -57,6 +65,14 @@ class EncuestasController extends Controller
     }
 
     public function mostrarConsentimiento(){
+        $user = Auth::user();
+        if (
+            $user->terminos !== config('constants.USUARIO_CONFIRMA') ||
+            $user->consentimiento !== config('constants.USUARIO_ESPERA')
+        ) {
+            return redirect()->route('encuesta.inicio');
+        }
+
         return view('encuesta.consentimiento');
     } 
 
@@ -98,28 +114,49 @@ class EncuestasController extends Controller
     }
 
     public function aceptarConsentimiento(Request $request){
-        $user_registro = Auth::user()->registro;
-        try{
-            $empleado =  Empleado::where('registro',$user_registro);
-            if($request->consentimiento == config('constants.USUARIO_CONFIRMA')){
-                $empleado->update([
-                    'consentimiento'    => $request->input('consentimiento'),
-                    'firma'             => $request->input('firma'),
-                    'fecha_firma'       => $request->input('fecha_firma'),
-                    'ciudad_expedicion' => $request->input('ciudad_expedicion'),
-                ]);
+        $request->validate([
+            'consentimiento' => ['required', Rule::in([
+                config('constants.USUARIO_CONFIRMA'),
+                config('constants.USUARIO_NIEGA'),
+            ])],
+        ]);
 
-                return redirect()->route('encuesta.fichadatos');            
-            }else{
-                $empleado->update([
-                    'consentimiento' => $request->input('consentimiento'),
-                    'fichadatos'=>config('constants.USUARIO_NIEGA'),
-                    'habilitado' => config('constants.USUARIO_COMPLETO'),
-                    'tipoencuesta' => 'noconsentimiento',
-                    'llave' => config('constants.USUARIO_LLAVE')
-                ]); 
-                return redirect()->intended('encuesta/no-consentimiento');    
+        $user = Auth::user();
+        if (
+            $user->terminos !== config('constants.USUARIO_CONFIRMA') ||
+            $user->consentimiento !== config('constants.USUARIO_ESPERA')
+        ) {
+            return redirect()->route('encuesta.inicio');
+        }
+
+        $updates = $request->input('consentimiento') === config('constants.USUARIO_CONFIRMA')
+            ? [
+                'consentimiento' => config('constants.USUARIO_CONFIRMA'),
+                'firma' => $request->input('firma'),
+                'fecha_firma' => $request->input('fecha_firma'),
+                'ciudad_expedicion' => $request->input('ciudad_expedicion'),
+            ]
+            : [
+                'consentimiento' => config('constants.USUARIO_NIEGA'),
+                'fichadatos' => config('constants.USUARIO_NIEGA'),
+                'habilitado' => config('constants.USUARIO_COMPLETO'),
+                'tipoencuesta' => 'noconsentimiento',
+                'llave' => config('constants.USUARIO_LLAVE'),
+            ];
+
+        try{
+            $updated = Empleado::where('registro', $user->registro)
+                ->where('terminos', config('constants.USUARIO_CONFIRMA'))
+                ->where('consentimiento', config('constants.USUARIO_ESPERA'))
+                ->update($updates);
+
+            if (!$updated) {
+                return redirect()->route('encuesta.inicio');
             } 
+
+            return $request->input('consentimiento') === config('constants.USUARIO_CONFIRMA')
+                ? redirect()->route('encuesta.fichadatos')
+                : redirect()->route('encuesta.no-consentimiento');
         }catch(ModelNotFoundException $exception){
             Log::error('Empleado no encontrado: ', $exception);
             return back()->withError(config('MENSAJE_ERROR_MODELO_NOT_FOUND'))->withInput();
@@ -149,7 +186,20 @@ class EncuestasController extends Controller
          $edad = Carbon::now()->format('Y') - $validatedData['anonaci'];
          $additionalData['edad']   = $edad;
        
-         $data = array_merge($validatedData, $additionalData);
+        $data = array_merge($validatedData, $additionalData);
+        $data['registro'] = Auth::user()->registro;
+        $secciones = $this->obtenerRutasValidas(
+            strtoupper(Auth::user()->nivelSeguridad),
+            Auth::user()->afrontamiento,
+            Auth::user()->adicional
+        );
+        $primeraSeccion = $secciones->first();
+        if (!$primeraSeccion) {
+            return redirect()->back()
+                ->with('error', 'No hay secciones configuradas para esta encuesta.')
+                ->withInput();
+        }
+        $data['tablacontestada'] = $primeraSeccion->route;
         $data['ocupacion'] = mb_convert_encoding($data['ocupacion'], 'UTF-8', 'UTF-8');
        
         $maxAttempts = 5;
@@ -217,25 +267,72 @@ class EncuestasController extends Controller
     }
 
     public function confirmarPreguntas(PreguntasRequest $request){
-       
-        $seccion = Seccion::where('tipo', $request->tipo)->where('route', $request->rutaActual)->first();
+        $tipo = strtoupper(Auth::user()->nivelSeguridad);
+        $rutaActual = $request->input('rutaActual');
+        $seccion = Seccion::where('tipo', $tipo)->where('route', $rutaActual)->first();
 
         if (!$seccion) {
             return redirect()->back()
                 ->with('error', 'Sección no encontrada.');
         }
 
-        
         $fichaDato = Fichadato::where('registro', Auth::user()->registro)->first();
-    
-        $proximaSeccionId = $this->obtenerFinPreguntas($request->input('proximaSeccionId'));
+        if (!$fichaDato) {
+            return redirect()->back()
+                ->with('error', 'No se encontró el avance actual de la encuesta.');
+        }
 
-        $incluyePreguntas = $this->esSeccionConPreguntas($request->rutaActual);
-       
+        $secciones = $this->obtenerRutasValidas(
+            $tipo,
+            Auth::user()->afrontamiento,
+            Auth::user()->adicional
+        );
+        $rutaGuardada = $fichaDato->tablacontestada;
+        $indiceRutaGuardada = $this->obtenerIndiceAvance($secciones, $rutaGuardada);
+        if ($indiceRutaGuardada === false) {
+            return redirect()->back()
+                ->with('error', 'No se pudo determinar el avance actual de la encuesta.');
+        }
+
+        if (
+            strtoupper($request->input('tipo')) !== $tipo ||
+            $rutaGuardada !== $rutaActual
+        ) {
+            return redirect()->route('encuesta.preguntas', [
+                'tipo' => strtolower($tipo),
+                'seccion' => $rutaGuardada,
+            ]);
+        }
+
+        $indiceFinEncuesta = $this->obtenerIndiceAvance(
+            $secciones,
+            config('constants.SECCION_FIN_ENCUESTA')
+        );
+        if ($indiceFinEncuesta !== $secciones->count() - 1) {
+            return redirect()->back()
+                ->with('error', 'La sección final no está correctamente configurada.');
+        }
+
+        $indiceSeccion = $this->obtenerIndiceAvance($secciones, $rutaActual);
+        if ($indiceSeccion === false) {
+            return redirect()->back()
+                ->with('error', 'La sección no está disponible para esta encuesta.');
+        }
+
+        $siguienteSeccion = $secciones->get($indiceSeccion + 1);
+        if (!$siguienteSeccion) {
+            return redirect()->back()
+                ->with('error', 'No hay una siguiente sección configurada para esta encuesta.');
+        }
+        $proximaSeccionId = $this->obtenerFinPreguntas($siguienteSeccion->route);
+
+        $incluyePreguntas = $this->esSeccionConPreguntas($rutaActual);
+
         try{
             if($incluyePreguntas){
-            
-                $data = $this->obenterRequestData($request, $request->rutaActual);
+
+                $data = $this->obenterRequestData($request, $rutaActual);
+                $data['registro'] = Auth::user()->registro;
                 
   
                 $modelClass = $seccion->modelo;
@@ -262,24 +359,32 @@ class EncuestasController extends Controller
                 }
             }
              
-            if($request->input('confirma') != null){
-            
-                if($request->rutaActual == config('constants.SECCION_CONFIRMA_ATENCION')){
-                    $proximaSeccionId = $request->input('confirma') == config('constants.USUARIO_APLICA') ? $request->input('proximaSeccionId') : config('constants.SECCION_CONFIRMA_JEFE');
+            if (!$incluyePreguntas) {
+                $confirma = $request->input('confirma');
+                if (!in_array($confirma, [
+                    config('constants.USUARIO_APLICA'),
+                    config('constants.USUARIO_NO_APLICA'),
+                ], true)) {
+                    return redirect()->back()
+                        ->with('error', 'La respuesta de confirmación no es válida.');
+                }
+
+                if($rutaActual == config('constants.SECCION_CONFIRMA_ATENCION')){
+                    $proximaSeccionId = $confirma == config('constants.USUARIO_APLICA') ? $proximaSeccionId : config('constants.SECCION_CONFIRMA_JEFE');
                     if($proximaSeccionId == config('constants.SECCION_CONFIRMA_JEFE')){
-                        $proximaSeccionId = $this->aplicaEncuestaJefes($proximaSeccionId,$request->tipo);
+                        $proximaSeccionId = $this->aplicaEncuestaJefes($proximaSeccionId,$tipo);
                     }
                     $fichaDato->update([
-                        'serviciocliente' => $request->input('confirma'),
+                        'serviciocliente' => $confirma,
                         'tablacontestada' => $proximaSeccionId
                     ]);
 
                 }
 
-                if($request->rutaActual == config('constants.SECCION_CONFIRMA_JEFE')){
-                    $proximaSeccionId = $request->input('confirma') == config('constants.USUARIO_APLICA') ? $request->input('proximaSeccionId') : config('constants.SECCION_CONDICIONES_VIVIENDA');
+                if($rutaActual == config('constants.SECCION_CONFIRMA_JEFE')){
+                    $proximaSeccionId = $confirma == config('constants.USUARIO_APLICA') ? $proximaSeccionId : config('constants.SECCION_CONDICIONES_VIVIENDA');
                     $fichaDato->update([
-                        'soyjefe' => $request->input('confirma'),
+                        'soyjefe' => $confirma,
                         'tablacontestada' => $proximaSeccionId
                     ]);
 

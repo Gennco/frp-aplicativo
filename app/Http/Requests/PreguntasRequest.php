@@ -26,7 +26,11 @@ class PreguntasRequest extends FormRequest
         $this->seccion = Seccion::where('tipo', request()->tipo)
                           ->where('route', request()->rutaActual)
                           ->first();
-            
+
+        if (!$this->seccion) {
+            return;
+        }
+
         $this->incluyePreguntas = EncuestasController::esSeccionConPreguntas($this->seccion->route);
         if ($this->incluyePreguntas) {
             $this->prefijoPreguntas = EncuestasController::obtenerPrefijoPreguntas($this->seccion->route);
